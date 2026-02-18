@@ -106,8 +106,8 @@ export default function HomePage() {
             }}
           >
             <div>
-              <div style={{ fontSize: '17px', fontWeight: 600, color: '#1a1208' }}>Submit a Ticket</div>
-              <div style={{ fontSize: '12px', color: 'rgba(26,18,8,0.6)', marginTop: '2px' }}>
+              <div style={{ fontSize: '17px', fontWeight: 600, color: '#0a0907' }}>Submit a Ticket</div>
+              <div style={{ fontSize: '12px', color: 'rgba(10,9,7,0.6)', marginTop: '2px' }}>
                 Report an issue to Chase
               </div>
             </div>

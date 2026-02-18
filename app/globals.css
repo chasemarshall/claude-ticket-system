@@ -3,26 +3,30 @@
 @tailwind utilities;
 
 :root {
-  --bg: #1a1208;
-  --surface: #221809;
-  --card: #2c1f0f;
-  --card-hover: #342611;
-  --border: #4a3520;
-  --border-light: #5a4530;
-  --text-1: #f5e6c8;
-  --text-2: #b89a6e;
-  --text-3: #7a6245;
-  --accent: #d4a853;
-  --accent-dim: rgba(212, 168, 83, 0.12);
-  --accent-border: rgba(212, 168, 83, 0.3);
-  --sage: #7fb069;
-  --sage-dim: rgba(127, 176, 105, 0.12);
-  --sky: #6a94c4;
-  --sky-dim: rgba(106, 148, 196, 0.12);
-  --rose: #c47a6a;
-  --rose-dim: rgba(196, 122, 106, 0.12);
-  --mauve: #a47ac4;
-  --mauve-dim: rgba(164, 122, 196, 0.12);
+  --bg: #0a0907;
+  --surface: #111009;
+  --card: #17140f;
+  --card-hover: #1e1a14;
+  --border: #2b2620;
+  --border-light: #362e28;
+  --text-1: #f0ece3;
+  --text-2: #8a8070;
+  --text-3: #54504a;
+  --accent: #ff7a3d;
+  --accent-dim: rgba(255, 122, 61, 0.1);
+  --accent-border: rgba(255, 122, 61, 0.22);
+  --sage: #4ade80;
+  --sage-dim: rgba(74, 222, 128, 0.1);
+  --sage-border: rgba(74, 222, 128, 0.22);
+  --sky: #60a5fa;
+  --sky-dim: rgba(96, 165, 250, 0.1);
+  --sky-border: rgba(96, 165, 250, 0.22);
+  --rose: #f87171;
+  --rose-dim: rgba(248, 113, 113, 0.1);
+  --rose-border: rgba(248, 113, 113, 0.22);
+  --mauve: #a78bfa;
+  --mauve-dim: rgba(167, 139, 250, 0.1);
+  --mauve-border: rgba(167, 139, 250, 0.22);
 }
 
 html,
@@ -30,21 +34,10 @@ body {
   height: 100%;
   background: var(--bg);
   color: var(--text-1);
-  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
-}
-
-/* Grain overlay */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.04;
-  pointer-events: none;
-  z-index: 9999;
 }
 
 /* App container */
@@ -97,7 +90,7 @@ main {
     border-color: var(--border);
   }
   .font-display {
-    font-family: var(--font-cormorant), Georgia, serif;
+    font-family: var(--font-syne), system-ui, sans-serif;
   }
   .safe-bottom {
     padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 80px);

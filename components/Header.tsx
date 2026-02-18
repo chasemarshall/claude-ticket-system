@@ -20,9 +20,9 @@ export default function Header({ title, showBack, showAvatar, action }: HeaderPr
     <header
       className="flex items-center justify-between px-5 sticky top-0 z-10"
       style={{
-        background: 'rgba(26,18,8,0.92)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
+        background: 'rgba(10,9,7,0.96)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
         borderBottom: '1px solid var(--border)',
         paddingTop: 'calc(14px + env(safe-area-inset-top, 0px))',
         paddingBottom: '14px',

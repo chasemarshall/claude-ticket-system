@@ -10,9 +10,9 @@ interface TicketCardProps {
 }
 
 const PRIORITY_COLOR: Record<string, string> = {
-  high: '#c47a6a',
-  medium: '#d4a853',
-  low: '#7fb069',
+  high: '#f87171',
+  medium: '#ff7a3d',
+  low: '#4ade80',
 }
 
 export default function TicketCard({ ticket, onClick, showAuthor }: TicketCardProps) {

@@ -3,27 +3,27 @@ import { TicketStatus } from '@/lib/types'
 const STATUS_CONFIG: Record<TicketStatus, { label: string; color: string; bg: string; border: string }> = {
   open: {
     label: 'Open',
-    color: '#7fb069',
-    bg: 'rgba(127,176,105,0.12)',
-    border: 'rgba(127,176,105,0.25)',
+    color: '#4ade80',
+    bg: 'rgba(74,222,128,0.1)',
+    border: 'rgba(74,222,128,0.22)',
   },
   'in-progress': {
     label: 'In Progress',
-    color: '#6a94c4',
-    bg: 'rgba(106,148,196,0.12)',
-    border: 'rgba(106,148,196,0.25)',
+    color: '#60a5fa',
+    bg: 'rgba(96,165,250,0.1)',
+    border: 'rgba(96,165,250,0.22)',
   },
   pending: {
     label: 'Pending',
-    color: '#d4a853',
-    bg: 'rgba(212,168,83,0.12)',
-    border: 'rgba(212,168,83,0.3)',
+    color: '#ff7a3d',
+    bg: 'rgba(255,122,61,0.1)',
+    border: 'rgba(255,122,61,0.22)',
   },
   closed: {
     label: 'Closed',
-    color: '#7a6245',
-    bg: 'rgba(122,98,69,0.15)',
-    border: 'rgba(122,98,69,0.2)',
+    color: '#54504a',
+    bg: 'rgba(84,80,74,0.15)',
+    border: 'rgba(84,80,74,0.22)',
   },
 }
 
