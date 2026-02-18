@@ -33,7 +33,7 @@ export default function LoginPage() {
       className="flex flex-col items-center justify-center p-6 animate-fadeIn"
       style={{
         minHeight: '100dvh',
-        background: `radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255,122,61,0.08) 0%, transparent 60%), var(--bg)`,
+        background: `radial-gradient(ellipse 80% 50% at 50% -10%, rgba(123,111,238,0.08) 0%, transparent 60%), var(--bg)`,
         paddingTop: 'calc(24px + env(safe-area-inset-top, 0px))',
         paddingBottom: 'calc(24px + env(safe-area-inset-bottom, 0px))',
       }}
@@ -52,7 +52,7 @@ export default function LoginPage() {
             justifyContent: 'center',
             fontSize: '28px',
             margin: '0 auto 20px',
-            boxShadow: '0 0 40px rgba(255,122,61,0.12)',
+            boxShadow: '0 0 40px rgba(123,111,238,0.12)',
           }}
         >
           🏠
@@ -61,7 +61,7 @@ export default function LoginPage() {
           className="font-display"
           style={{ fontSize: '48px', fontWeight: 300, color: 'var(--text-1)', lineHeight: 1, letterSpacing: '-0.5px' }}
         >
-          Home Base
+          Kin
         </h1>
         <p
           style={{

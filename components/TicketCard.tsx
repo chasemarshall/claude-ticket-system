@@ -11,7 +11,7 @@ interface TicketCardProps {
 
 const PRIORITY_COLOR: Record<string, string> = {
   high: '#f87171',
-  medium: '#ff7a3d',
+  medium: '#fbbf24',
   low: '#4ade80',
 }
 

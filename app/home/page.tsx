@@ -68,7 +68,7 @@ export default function HomePage() {
         paddingBottom: 'calc(80px + env(safe-area-inset-bottom, 0px))',
       }}
     >
-      <Header title="Home Base" showAvatar />
+      <Header title="Kin" showAvatar />
 
       {/* Welcome */}
       <div className="px-5 pt-6 pb-2">

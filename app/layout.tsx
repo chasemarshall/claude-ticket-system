@@ -20,7 +20,7 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Home Base',
+  title: 'Kin',
   description: 'Frazier Family Home Management',
   manifest: '/manifest.json',
 }

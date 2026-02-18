@@ -84,7 +84,7 @@ export default function NewAnnouncementPage() {
               fontSize: '15px',
               color: 'var(--text-1)',
               outline: 'none',
-              fontFamily: 'var(--font-outfit)',
+              fontFamily: 'var(--font-dm-sans)',
             }}
             onFocus={(e) => (e.target.style.borderColor = 'var(--accent-border)')}
             onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
@@ -119,7 +119,7 @@ export default function NewAnnouncementPage() {
               fontSize: '15px',
               color: 'var(--text-1)',
               outline: 'none',
-              fontFamily: 'var(--font-outfit)',
+              fontFamily: 'var(--font-dm-sans)',
               resize: 'none',
             }}
             onFocus={(e) => (e.target.style.borderColor = 'var(--accent-border)')}
@@ -200,14 +200,14 @@ export default function NewAnnouncementPage() {
           style={{
             width: '100%',
             background: submitting ? 'var(--border)' : 'var(--accent)',
-            color: '#1a1208',
+            color: '#0f0e1a',
             border: 'none',
             borderRadius: '14px',
             padding: '16px',
             fontSize: '16px',
             fontWeight: 600,
             cursor: submitting ? 'not-allowed' : 'pointer',
-            fontFamily: 'var(--font-outfit)',
+            fontFamily: 'var(--font-dm-sans)',
             transition: 'all 0.2s',
           }}
         >

@@ -99,12 +99,12 @@ export default function AdminPage() {
               borderRadius: '999px',
               fontSize: '13px',
               cursor: 'pointer',
-              fontFamily: 'var(--font-outfit)',
+              fontFamily: 'var(--font-dm-sans)',
               fontWeight: 500,
               transition: 'all 0.15s',
               whiteSpace: 'nowrap',
               ...(filter === f.value
-                ? { background: 'var(--accent)', border: '1px solid var(--accent)', color: '#1a1208' }
+                ? { background: 'var(--accent)', border: '1px solid var(--accent)', color: '#0f0e1a' }
                 : { background: 'var(--card)', border: '1px solid var(--border)', color: 'var(--text-2)' }),
             }}
           >

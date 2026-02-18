@@ -15,9 +15,9 @@ const STATUS_CONFIG: Record<TicketStatus, { label: string; color: string; bg: st
   },
   pending: {
     label: 'Pending',
-    color: '#ff7a3d',
-    bg: 'rgba(255,122,61,0.1)',
-    border: 'rgba(255,122,61,0.22)',
+    color: '#7b6fee',
+    bg: 'rgba(123,111,238,0.1)',
+    border: 'rgba(123,111,238,0.22)',
   },
   closed: {
     label: 'Closed',
