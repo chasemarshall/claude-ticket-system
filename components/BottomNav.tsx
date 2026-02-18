@@ -75,7 +75,6 @@ export default function BottomNav() {
                     fontWeight: 400,
                     color: '#0a0907',
                     lineHeight: 1,
-                    boxShadow: '0 0 20px rgba(123,111,238,0.35)',
                     marginBottom: '2px',
                   }}
                 >

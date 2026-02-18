@@ -11,7 +11,7 @@ import Header from '@/components/Header'
 
 const PRIORITIES: { value: TicketPriority; label: string; color: string }[] = [
   { value: 'low', label: 'Low', color: '#4ade80' },
-  { value: 'medium', label: 'Medium', color: '#fbbf24' },
+  { value: 'medium', label: 'Medium', color: '#fb923c' },
   { value: 'high', label: 'High', color: '#f87171' },
 ]
 
@@ -47,7 +47,7 @@ export default function NewTicketPage() {
     })
 
     if (error) {
-      showToast('Failed to submit ticket', 'error')
+      showToast(error.message || 'Failed to submit ticket', 'error')
       setSubmitting(false)
     } else {
       showToast('Ticket submitted ✓')
@@ -121,7 +121,7 @@ export default function NewTicketPage() {
               fontSize: '15px',
               color: 'var(--text-1)',
               outline: 'none',
-              fontFamily: 'var(--font-dm-sans)',
+              fontFamily: 'var(--font-inter)',
             }}
             onFocus={(e) => (e.target.style.borderColor = 'var(--accent-border)')}
             onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
@@ -147,7 +147,7 @@ export default function NewTicketPage() {
               fontSize: '15px',
               color: 'var(--text-1)',
               outline: 'none',
-              fontFamily: 'var(--font-dm-sans)',
+              fontFamily: 'var(--font-inter)',
               resize: 'none',
             }}
             onFocus={(e) => (e.target.style.borderColor = 'var(--accent-border)')}
@@ -175,7 +175,7 @@ export default function NewTicketPage() {
                   fontSize: '13px',
                   fontWeight: 500,
                   cursor: 'pointer',
-                  fontFamily: 'var(--font-dm-sans)',
+                  fontFamily: 'var(--font-inter)',
                   transition: 'all 0.15s',
                 }}
               >
@@ -199,7 +199,7 @@ export default function NewTicketPage() {
             fontSize: '16px',
             fontWeight: 600,
             cursor: submitting ? 'not-allowed' : 'pointer',
-            fontFamily: 'var(--font-dm-sans)',
+            fontFamily: 'var(--font-inter)',
             transition: 'all 0.2s',
           }}
         >

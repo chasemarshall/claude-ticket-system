@@ -99,7 +99,7 @@ export default function AdminPage() {
               borderRadius: '999px',
               fontSize: '13px',
               cursor: 'pointer',
-              fontFamily: 'var(--font-dm-sans)',
+              fontFamily: 'var(--font-inter)',
               fontWeight: 500,
               transition: 'all 0.15s',
               whiteSpace: 'nowrap',

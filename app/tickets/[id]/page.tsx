@@ -195,7 +195,7 @@ export default function TicketDetailPage() {
                     fontSize: '13px',
                     fontWeight: 500,
                     cursor: ticket.status === s.value ? 'default' : 'pointer',
-                    fontFamily: 'var(--font-dm-sans)',
+                    fontFamily: 'var(--font-inter)',
                     transition: 'all 0.15s',
                     ...(ticket.status === s.value
                       ? {
@@ -229,7 +229,7 @@ export default function TicketDetailPage() {
                 fontWeight: 500,
                 color: 'var(--rose)',
                 cursor: 'pointer',
-                fontFamily: 'var(--font-dm-sans)',
+                fontFamily: 'var(--font-inter)',
               }}
             >
               Delete Ticket

@@ -150,7 +150,7 @@ export default function AnnouncementsPage() {
                       fontSize: '12px',
                       color: ann.pinned ? 'var(--accent)' : 'var(--text-2)',
                       cursor: 'pointer',
-                      fontFamily: 'var(--font-dm-sans)',
+                      fontFamily: 'var(--font-inter)',
                     }}
                   >
                     {ann.pinned ? 'Unpin' : 'Pin'}
@@ -165,7 +165,7 @@ export default function AnnouncementsPage() {
                       fontSize: '12px',
                       color: 'var(--rose)',
                       cursor: 'pointer',
-                      fontFamily: 'var(--font-dm-sans)',
+                      fontFamily: 'var(--font-inter)',
                     }}
                   >
                     Delete
