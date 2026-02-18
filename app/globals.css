@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #1a1208;
+  --surface: #221809;
+  --card: #2c1f0f;
+  --card-hover: #342611;
+  --border: #4a3520;
+  --border-light: #5a4530;
+  --text-1: #f5e6c8;
+  --text-2: #b89a6e;
+  --text-3: #7a6245;
+  --accent: #d4a853;
+  --accent-dim: rgba(212, 168, 83, 0.12);
+  --accent-border: rgba(212, 168, 83, 0.3);
+  --sage: #7fb069;
+  --sage-dim: rgba(127, 176, 105, 0.12);
+  --sky: #6a94c4;
+  --sky-dim: rgba(106, 148, 196, 0.12);
+  --rose: #c47a6a;
+  --rose-dim: rgba(196, 122, 106, 0.12);
+  --mauve: #a47ac4;
+  --mauve-dim: rgba(164, 122, 196, 0.12);
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+/* Grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* App container */
+#__next,
+main {
+  height: 100dvh;
+}
+
+/* Scrollbar hiding */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Custom utilities */
+@layer utilities {
+  .bg-app {
+    background: var(--bg);
+  }
+  .bg-card {
+    background: var(--card);
+  }
+  .bg-surface {
+    background: var(--surface);
+  }
+  .bg-accent {
+    background: var(--accent);
+  }
+  .text-1 {
+    color: var(--text-1);
+  }
+  .text-2 {
+    color: var(--text-2);
+  }
+  .text-3 {
+    color: var(--text-3);
+  }
+  .text-accent {
+    color: var(--accent);
+  }
+  .border-brand {
+    border-color: var(--border);
+  }
+  .font-display {
+    font-family: var(--font-cormorant), Georgia, serif;
+  }
+  .safe-bottom {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 80px);
+  }
+}
+
+/* Staggered animation delays for family grid */
+.family-card:nth-child(1) {
+  animation-delay: 0ms;
+}
+.family-card:nth-child(2) {
+  animation-delay: 80ms;
+}
+.family-card:nth-child(3) {
+  animation-delay: 80ms;
+}
+.family-card:nth-child(4) {
+  animation-delay: 160ms;
+}
+.family-card:nth-child(5) {
+  animation-delay: 160ms;
+}
