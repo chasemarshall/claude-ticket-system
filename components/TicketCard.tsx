@@ -74,7 +74,7 @@ export default function TicketCard({ ticket, onClick, showAuthor }: TicketCardPr
               color: 'var(--text-3)',
             }}
           >
-            {showAuthor ? `${ticket.author} · ` : ''}
+            {showAuthor ? `${ticket.author.toLowerCase()} · ` : ''}
             {timeAgo(ticket.created_at)}
           </span>
         </div>

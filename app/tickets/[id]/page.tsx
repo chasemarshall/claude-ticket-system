@@ -127,7 +127,7 @@ export default function TicketDetailPage() {
         <div className="flex flex-wrap gap-2 items-center">
           <StatusBadge status={ticket.status} />
           {[
-            `by ${ticket.author}`,
+            `by ${ticket.author.toLowerCase()}`,
             formatDate(ticket.created_at),
           ].map((label) => (
             <span

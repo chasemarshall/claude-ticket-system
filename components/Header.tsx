@@ -86,7 +86,7 @@ export default function Header({ title, showBack, showAvatar, action }: HeaderPr
               cursor: 'pointer',
             }}
           >
-            {member.name.charAt(0)}
+            {member.name.charAt(0).toLowerCase()}
           </button>
         )}
       </div>

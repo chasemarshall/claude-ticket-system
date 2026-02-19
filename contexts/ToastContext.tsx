@@ -47,14 +47,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             key={toast.id}
             className="animate-toastIn"
             style={{
-              background: toast.type === 'error' ? '#C47A6A' : '#F5E6C8',
-              color: '#1A1208',
+              background: toast.type === 'error' ? 'var(--red-dim)' : 'var(--surface)',
+              color: toast.type === 'error' ? 'var(--red)' : 'var(--text-1)',
+              border: `1px solid ${toast.type === 'error' ? 'var(--red)' : 'var(--border)'}`,
               padding: '10px 20px',
-              borderRadius: '999px',
-              fontSize: '14px',
-              fontWeight: 500,
+              borderRadius: 'var(--radius)',
+              fontSize: '13px',
+              fontWeight: 400,
+              fontFamily: 'var(--font-mono)',
               whiteSpace: 'nowrap',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
             }}
           >
             {toast.message}

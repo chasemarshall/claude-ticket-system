@@ -103,7 +103,7 @@ interface MemberCardProps {
 }
 
 function MemberCard({ member, onClick, className, fullWidth }: MemberCardProps) {
-  const initial = member.name.charAt(0).toUpperCase()
+  const initial = member.name.charAt(0).toLowerCase()
 
   return (
     <div
@@ -142,7 +142,7 @@ function MemberCard({ member, onClick, className, fullWidth }: MemberCardProps) 
       </div>
       <div style={{ textAlign: fullWidth ? 'left' : 'center' }}>
         <div style={{ fontSize: '14px', fontWeight: 500, fontFamily: 'var(--font-outfit)', color: 'var(--text-1)' }}>
-          {member.name}
+          {member.name.toLowerCase()}
         </div>
         {member.isAdmin && (
           <div

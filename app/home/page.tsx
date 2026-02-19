@@ -112,7 +112,7 @@ export default function HomePage() {
             marginBottom: '8px',
           }}
         >
-          {user}
+          {user.toLowerCase()}
         </h1>
         {inlineSummaryParts.length > 0 ? (
           <p
