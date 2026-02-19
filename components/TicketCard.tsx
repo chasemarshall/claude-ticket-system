@@ -21,21 +21,27 @@ export default function TicketCard({ ticket, onClick, showAuthor }: TicketCardPr
   return (
     <div
       onClick={onClick}
-      className="list-item animate-entry cursor-pointer transition-colors duration-150"
+      className="list-item animate-entry cursor-pointer"
       style={{
-        background: 'var(--surface)',
-        border: '1px solid var(--border)',
-        borderRadius: 'var(--radius)',
-        padding: '14px 16px',
+        padding: '14px 0',
+        borderBottom: '1px solid var(--border)',
         display: 'flex',
         alignItems: 'flex-start',
         gap: '12px',
       }}
-      onMouseDown={(e) => { e.currentTarget.style.borderColor = 'var(--accent)' }}
-      onMouseUp={(e) => { e.currentTarget.style.borderColor = 'var(--border)' }}
-      onTouchStart={(e) => { e.currentTarget.style.borderColor = 'var(--accent)' }}
-      onTouchEnd={(e) => { e.currentTarget.style.borderColor = 'var(--border)' }}
     >
+      {/* Left accent */}
+      <div
+        style={{
+          width: '3px',
+          height: '36px',
+          background: PRIORITY_COLOR[ticket.priority],
+          borderRadius: '2px',
+          flexShrink: 0,
+          marginTop: '2px',
+        }}
+      />
+
       {/* Info */}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div
@@ -47,59 +53,37 @@ export default function TicketCard({ ticket, onClick, showAuthor }: TicketCardPr
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            marginBottom: '6px',
+            marginBottom: '4px',
           }}
         >
           {ticket.title}
         </div>
-        <div className="flex items-center gap-2" style={{ flexWrap: 'wrap' }}>
-          <span
-            style={{
-              fontSize: '10px',
-              fontFamily: 'var(--font-mono)',
-              color: 'var(--text-3)',
-              background: 'var(--card)',
-              padding: '2px 6px',
-              borderRadius: 'var(--radius)',
-              letterSpacing: '0.5px',
-            }}
-          >
-            {category.name.toLowerCase()}
-          </span>
-          <span
-            style={{
-              fontSize: '11px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 300,
-              color: 'var(--text-3)',
-            }}
-          >
-            {showAuthor ? `${ticket.author.toLowerCase()} · ` : ''}
-            {timeAgo(ticket.created_at)}
-          </span>
+        <div
+          style={{
+            fontSize: '11px',
+            fontFamily: 'var(--font-mono)',
+            fontWeight: 400,
+            color: 'var(--text-3)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+          }}
+        >
+          <span>{category.name.toLowerCase()}</span>
+          <span style={{ color: 'var(--border)' }}>/</span>
+          {showAuthor && (
+            <>
+              <span>{ticket.author.toLowerCase()}</span>
+              <span style={{ color: 'var(--border)' }}>/</span>
+            </>
+          )}
+          <span>{timeAgo(ticket.created_at)}</span>
         </div>
       </div>
 
-      {/* Right */}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-end',
-          gap: '6px',
-          flexShrink: 0,
-        }}
-      >
+      {/* Status */}
+      <div style={{ flexShrink: 0, paddingTop: '2px' }}>
         <StatusBadge status={ticket.status} />
-        <div
-          style={{
-            width: '6px',
-            height: '6px',
-            borderRadius: '50%',
-            background: PRIORITY_COLOR[ticket.priority],
-          }}
-          title={`${ticket.priority} priority`}
-        />
       </div>
     </div>
   )

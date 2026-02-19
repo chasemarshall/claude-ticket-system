@@ -49,10 +49,10 @@ export default function MyTicketsPage() {
       }}
     >
       <Header title="my tickets" showAvatar />
-      <div className="flex flex-col gap-2 px-5 pt-5">
+      <div className="px-5 pt-4">
         {dataLoading ? (
           [1, 2, 3].map((i) => (
-            <div key={i} className="skeleton" style={{ height: '64px' }} />
+            <div key={i} className="skeleton" style={{ height: '56px', marginBottom: '1px' }} />
           ))
         ) : tickets.length > 0 ? (
           tickets.map((ticket) => (
@@ -63,8 +63,8 @@ export default function MyTicketsPage() {
             />
           ))
         ) : (
-          <div className="text-center py-20">
-            <p style={{ fontSize: '13px', fontFamily: 'var(--font-mono)', fontWeight: 400, color: 'var(--text-3)' }}>
+          <div className="py-20">
+            <p style={{ fontSize: '13px', fontFamily: 'var(--font-mono)', color: 'var(--text-3)' }}>
               no tickets yet — all clear
             </p>
           </div>

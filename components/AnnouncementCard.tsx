@@ -9,11 +9,10 @@ export default function AnnouncementCard({ announcement }: AnnouncementCardProps
   return (
     <div
       style={{
-        background: 'var(--surface)',
-        border: '1px solid var(--border)',
-        borderLeft: `3px solid ${announcement.pinned ? 'var(--yellow)' : 'var(--border)'}`,
-        borderRadius: 'var(--radius)',
-        padding: '14px 16px',
+        padding: '14px 0',
+        borderBottom: '1px solid var(--border)',
+        borderLeft: `3px solid ${announcement.pinned ? 'var(--accent)' : 'transparent'}`,
+        paddingLeft: announcement.pinned ? '14px' : '0',
       }}
     >
       {announcement.pinned && (
@@ -22,9 +21,8 @@ export default function AnnouncementCard({ announcement }: AnnouncementCardProps
             fontSize: '10px',
             fontFamily: 'var(--font-mono)',
             fontWeight: 400,
-            color: 'var(--yellow)',
-            letterSpacing: '0.5px',
-            marginBottom: '6px',
+            color: 'var(--accent)',
+            marginBottom: '4px',
           }}
         >
           pinned
@@ -37,7 +35,7 @@ export default function AnnouncementCard({ announcement }: AnnouncementCardProps
           fontFamily: 'var(--font-outfit)',
           color: 'var(--text-1)',
           lineHeight: 1.3,
-          marginBottom: '6px',
+          marginBottom: '4px',
         }}
       >
         {announcement.title}
@@ -50,7 +48,7 @@ export default function AnnouncementCard({ announcement }: AnnouncementCardProps
           color: 'var(--text-2)',
           lineHeight: 1.55,
           display: '-webkit-box',
-          WebkitLineClamp: 3,
+          WebkitLineClamp: 2,
           WebkitBoxOrient: 'vertical' as const,
           overflow: 'hidden',
         }}
@@ -62,7 +60,7 @@ export default function AnnouncementCard({ announcement }: AnnouncementCardProps
           fontSize: '11px',
           fontFamily: 'var(--font-mono)',
           color: 'var(--text-3)',
-          marginTop: '10px',
+          marginTop: '8px',
         }}
       >
         {timeAgo(announcement.created_at)}

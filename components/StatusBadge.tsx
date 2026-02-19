@@ -4,11 +4,11 @@ interface StatusBadgeProps {
   status: TicketStatus
 }
 
-const STATUS_CONFIG: Record<TicketStatus, { label: string; color: string; bg: string }> = {
-  open:          { label: 'Open',        color: 'var(--green)',  bg: 'var(--green-dim)'  },
-  'in-progress': { label: 'In Progress', color: 'var(--blue)',   bg: 'var(--blue-dim)'   },
-  pending:       { label: 'Pending',     color: 'var(--yellow)', bg: 'var(--yellow-dim)' },
-  closed:        { label: 'Closed',      color: 'var(--text-3)', bg: 'var(--surface)'    },
+const STATUS_CONFIG: Record<TicketStatus, { label: string; color: string }> = {
+  open:          { label: 'open',        color: 'var(--green)'  },
+  'in-progress': { label: 'in progress', color: 'var(--blue)'   },
+  pending:       { label: 'pending',     color: 'var(--yellow)' },
+  closed:        { label: 'closed',      color: 'var(--text-3)' },
 }
 
 export default function StatusBadge({ status }: StatusBadgeProps) {
@@ -17,16 +17,11 @@ export default function StatusBadge({ status }: StatusBadgeProps) {
   return (
     <span
       style={{
-        display: 'inline-block',
-        padding: '3px 8px',
-        borderRadius: 'var(--radius)',
-        fontSize: '10px',
-        fontWeight: 500,
+        fontSize: '11px',
         fontFamily: 'var(--font-mono)',
+        fontWeight: 400,
         color: config.color,
-        background: config.bg,
         whiteSpace: 'nowrap',
-        letterSpacing: '0.3px',
       }}
     >
       {config.label}

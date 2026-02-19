@@ -24,15 +24,6 @@ const PRIORITY_COLOR: Record<string, string> = {
   low:    'var(--green)',
 }
 
-const sectionLabel: React.CSSProperties = {
-  fontSize: '10px',
-  fontFamily: 'var(--font-mono)',
-  fontWeight: 400,
-  color: 'var(--text-3)',
-  letterSpacing: '1px',
-  marginBottom: '12px',
-}
-
 export default function TicketDetailPage() {
   const { user, isAdmin, loading } = useSession()
   const router = useRouter()
@@ -64,7 +55,7 @@ export default function TicketDetailPage() {
       .eq('id', ticket.id)
     if (!error) {
       setTicket({ ...ticket, status })
-      showToast(`Status -> ${status}`)
+      showToast(`status -> ${status}`)
     }
     setUpdating(false)
   }
@@ -72,7 +63,7 @@ export default function TicketDetailPage() {
   const deleteTicket = async () => {
     const { error } = await supabase.from('tickets').delete().eq('id', ticket.id)
     if (!error) {
-      showToast('Ticket deleted')
+      showToast('ticket deleted')
       router.back()
     }
   }
@@ -89,26 +80,8 @@ export default function TicketDetailPage() {
     >
       <Header title="ticket" showBack />
 
-      {/* Hero */}
+      {/* Title */}
       <div className="px-5 pt-6 pb-5" style={{ borderBottom: '1px solid var(--border)' }}>
-        {/* Category badge */}
-        <div
-          style={{
-            display: 'inline-block',
-            background: 'var(--surface)',
-            border: '1px solid var(--border)',
-            borderRadius: 'var(--radius)',
-            padding: '4px 10px',
-            fontSize: '11px',
-            fontFamily: 'var(--font-mono)',
-            color: 'var(--text-2)',
-            marginBottom: '14px',
-            letterSpacing: '0.3px',
-          }}
-        >
-          {category.name.toLowerCase()}
-        </div>
-
         <h1
           style={{
             fontFamily: 'var(--font-mono)',
@@ -117,54 +90,49 @@ export default function TicketDetailPage() {
             color: 'var(--text-1)',
             lineHeight: 1.3,
             letterSpacing: '-0.5px',
-            marginBottom: '16px',
+            marginBottom: '12px',
           }}
         >
           {ticket.title}
         </h1>
 
-        {/* Meta row */}
-        <div className="flex flex-wrap gap-2 items-center">
+        {/* Meta */}
+        <div
+          style={{
+            fontSize: '11px',
+            fontFamily: 'var(--font-mono)',
+            color: 'var(--text-3)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            flexWrap: 'wrap',
+          }}
+        >
           <StatusBadge status={ticket.status} />
-          {[
-            `by ${ticket.author.toLowerCase()}`,
-            formatDate(ticket.created_at),
-          ].map((label) => (
-            <span
-              key={label}
-              style={{
-                background: 'var(--surface)',
-                border: '1px solid var(--border)',
-                borderRadius: 'var(--radius)',
-                padding: '3px 10px',
-                fontSize: '10px',
-                fontFamily: 'var(--font-mono)',
-                color: 'var(--text-2)',
-              }}
-            >
-              {label}
-            </span>
-          ))}
-          <span
-            style={{
-              background: 'var(--surface)',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius)',
-              padding: '3px 10px',
-              fontSize: '10px',
-              fontFamily: 'var(--font-mono)',
-              color: PRIORITY_COLOR[ticket.priority],
-            }}
-          >
-            {ticket.priority}
-          </span>
+          <span style={{ color: 'var(--border)' }}>/</span>
+          <span>{category.name.toLowerCase()}</span>
+          <span style={{ color: 'var(--border)' }}>/</span>
+          <span>{ticket.author.toLowerCase()}</span>
+          <span style={{ color: 'var(--border)' }}>/</span>
+          <span>{formatDate(ticket.created_at)}</span>
+          <span style={{ color: 'var(--border)' }}>/</span>
+          <span style={{ color: PRIORITY_COLOR[ticket.priority] }}>{ticket.priority}</span>
         </div>
       </div>
 
       {/* Description */}
       {ticket.description && (
         <div className="px-5 py-5" style={{ borderBottom: '1px solid var(--border)' }}>
-          <p style={sectionLabel}>description</p>
+          <p
+            style={{
+              fontSize: '10px',
+              fontFamily: 'var(--font-mono)',
+              color: 'var(--text-3)',
+              marginBottom: '8px',
+            }}
+          >
+            # description
+          </p>
           <p
             style={{
               fontSize: '14px',
@@ -183,55 +151,51 @@ export default function TicketDetailPage() {
       {isAdmin && (
         <>
           <div className="px-5 py-5" style={{ borderBottom: '1px solid var(--border)' }}>
-            <p style={sectionLabel}>update status</p>
-            <div className="grid grid-cols-2 gap-2">
+            <p
+              style={{
+                fontSize: '10px',
+                fontFamily: 'var(--font-mono)',
+                color: 'var(--text-3)',
+                marginBottom: '12px',
+              }}
+            >
+              # update status
+            </p>
+            <div className="flex gap-4 flex-wrap">
               {STATUSES.map((s) => {
-                const isCurrentStatus = ticket.status === s.value
+                const isCurrent = ticket.status === s.value
                 return (
-                  <button
+                  <span
                     key={s.value}
-                    onClick={() => updateStatus(s.value)}
-                    disabled={updating || isCurrentStatus}
+                    onClick={() => !isCurrent && !updating && updateStatus(s.value)}
                     style={{
-                      padding: '11px',
-                      borderRadius: 'var(--radius)',
                       fontSize: '12px',
-                      fontWeight: 400,
                       fontFamily: 'var(--font-mono)',
-                      cursor: isCurrentStatus ? 'default' : 'pointer',
-                      transition: 'all 0.15s',
-                      letterSpacing: '0.3px',
-                      ...(isCurrentStatus
-                        ? { background: 'var(--accent-dim)', border: '1px solid var(--accent)', color: 'var(--accent)' }
-                        : { background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text-2)' }),
+                      color: isCurrent ? 'var(--accent)' : 'var(--text-3)',
+                      cursor: isCurrent ? 'default' : 'pointer',
+                      borderBottom: isCurrent ? '1px solid var(--accent)' : '1px solid transparent',
+                      paddingBottom: '2px',
                     }}
                   >
                     {s.label}
-                  </button>
+                  </span>
                 )
               })}
             </div>
           </div>
 
           <div className="px-5 py-5">
-            <button
+            <span
               onClick={deleteTicket}
               style={{
-                width: '100%',
-                background: 'var(--red-dim)',
-                border: '1px solid rgba(243,139,168,0.3)',
-                borderRadius: 'var(--radius)',
-                padding: '13px',
                 fontSize: '12px',
-                fontWeight: 400,
                 fontFamily: 'var(--font-mono)',
                 color: 'var(--red)',
                 cursor: 'pointer',
-                letterSpacing: '0.3px',
               }}
             >
               delete ticket
-            </button>
+            </span>
           </div>
         </>
       )}

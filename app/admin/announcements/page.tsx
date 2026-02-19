@@ -42,7 +42,7 @@ export default function AnnouncementsPage() {
       setAnnouncements((prev) =>
         prev.map((a) => (a.id === ann.id ? { ...a, pinned: !ann.pinned } : a))
       )
-      showToast(ann.pinned ? 'Unpinned' : 'Pinned')
+      showToast(ann.pinned ? 'unpinned' : 'pinned')
     }
   }
 
@@ -50,32 +50,24 @@ export default function AnnouncementsPage() {
     const { error } = await supabase.from('announcements').delete().eq('id', id)
     if (!error) {
       setAnnouncements((prev) => prev.filter((a) => a.id !== id))
-      showToast('Deleted')
+      showToast('deleted')
     }
   }
 
   if (loading || !user || !isAdmin) return null
 
-  const AddButton = (
-    <button
+  const AddAction = (
+    <span
       onClick={() => router.push('/admin/announcements/new')}
       style={{
-        width: '34px',
-        height: '34px',
-        borderRadius: 'var(--radius)',
-        background: 'var(--surface)',
-        border: '1px solid var(--border)',
-        color: 'var(--accent)',
-        fontSize: '16px',
         fontFamily: 'var(--font-mono)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        fontSize: '13px',
+        color: 'var(--accent)',
         cursor: 'pointer',
       }}
     >
-      +
-    </button>
+      + new
+    </span>
   )
 
   return (
@@ -88,23 +80,22 @@ export default function AnnouncementsPage() {
         paddingBottom: 'calc(80px + env(safe-area-inset-bottom, 0px))',
       }}
     >
-      <Header title="announcements" showAvatar action={AddButton} />
+      <Header title="announcements" showAvatar action={AddAction} />
 
-      <div className="flex flex-col gap-3 px-5 pt-5">
+      <div className="px-5 pt-4">
         {dataLoading ? (
           [1, 2].map((i) => (
-            <div key={i} className="skeleton" style={{ height: '100px' }} />
+            <div key={i} className="skeleton" style={{ height: '80px', marginBottom: '1px' }} />
           ))
         ) : announcements.length > 0 ? (
           announcements.map((ann) => (
             <div
               key={ann.id}
               style={{
-                background: 'var(--surface)',
-                border: '1px solid var(--border)',
-                borderLeft: `3px solid ${ann.pinned ? 'var(--yellow)' : 'var(--border)'}`,
-                borderRadius: 'var(--radius)',
-                padding: '16px',
+                padding: '14px 0',
+                borderBottom: '1px solid var(--border)',
+                borderLeft: ann.pinned ? '3px solid var(--accent)' : 'none',
+                paddingLeft: ann.pinned ? '14px' : '0',
               }}
             >
               {ann.pinned && (
@@ -112,10 +103,8 @@ export default function AnnouncementsPage() {
                   style={{
                     fontSize: '10px',
                     fontFamily: 'var(--font-mono)',
-                    color: 'var(--yellow)',
-                    letterSpacing: '0.5px',
-                    fontWeight: 400,
-                    marginBottom: '6px',
+                    color: 'var(--accent)',
+                    marginBottom: '4px',
                   }}
                 >
                   pinned
@@ -143,7 +132,7 @@ export default function AnnouncementsPage() {
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical' as const,
                   overflow: 'hidden',
-                  marginBottom: '12px',
+                  marginBottom: '10px',
                 }}
               >
                 {ann.content}
@@ -158,29 +147,21 @@ export default function AnnouncementsPage() {
                 >
                   {timeAgo(ann.created_at)}
                 </span>
-                <div className="flex gap-2">
-                  <button
+                <div className="flex gap-4">
+                  <span
                     onClick={() => togglePin(ann)}
                     style={{
-                      padding: '5px 12px',
-                      borderRadius: 'var(--radius)',
-                      background: 'var(--card)',
-                      border: '1px solid var(--border)',
                       fontSize: '11px',
                       fontFamily: 'var(--font-mono)',
-                      color: ann.pinned ? 'var(--accent)' : 'var(--text-2)',
+                      color: ann.pinned ? 'var(--accent)' : 'var(--text-3)',
                       cursor: 'pointer',
                     }}
                   >
                     {ann.pinned ? 'unpin' : 'pin'}
-                  </button>
-                  <button
+                  </span>
+                  <span
                     onClick={() => deleteAnn(ann.id)}
                     style={{
-                      padding: '5px 12px',
-                      borderRadius: 'var(--radius)',
-                      background: 'var(--red-dim)',
-                      border: '1px solid rgba(243,139,168,0.25)',
                       fontSize: '11px',
                       fontFamily: 'var(--font-mono)',
                       color: 'var(--red)',
@@ -188,22 +169,21 @@ export default function AnnouncementsPage() {
                     }}
                   >
                     delete
-                  </button>
+                  </span>
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <div className="text-center py-20">
+          <div className="py-20">
             <p
               style={{
                 fontSize: '13px',
                 fontFamily: 'var(--font-mono)',
-                fontWeight: 400,
                 color: 'var(--text-3)',
               }}
             >
-              no announcements yet — tap + to create one
+              no announcements yet — tap + new to create one
             </p>
           </div>
         )}

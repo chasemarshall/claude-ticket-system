@@ -67,52 +67,46 @@ export default function AdminPage() {
     >
       <Header title="all tickets" showAvatar />
 
-      {/* Stat chips */}
+      {/* Stats */}
       <div
-        className="flex gap-2 px-5 pt-4"
-        style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', flexShrink: 0 }}
+        className="flex gap-6 px-5 py-4"
+        style={{ borderBottom: '1px solid var(--border)' }}
       >
-        <StatCard value={stats.open}       label="Open"        color="var(--green)"  />
-        <StatCard value={stats.inProgress} label="In Progress" color="var(--blue)"   />
-        <StatCard value={stats.pending}    label="Pending"     color="var(--yellow)" />
-        <StatCard value={stats.closed}     label="Closed"      color="var(--text-3)" />
+        <StatCard value={stats.open}       label="open"        color="var(--green)"  />
+        <StatCard value={stats.inProgress} label="in progress" color="var(--blue)"   />
+        <StatCard value={stats.pending}    label="pending"     color="var(--yellow)" />
+        <StatCard value={stats.closed}     label="closed"      color="var(--text-3)" />
       </div>
 
-      {/* Filter tabs */}
+      {/* Filters */}
       <div
-        className="flex gap-2 px-5 pt-4"
-        style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', flexShrink: 0 }}
+        className="flex gap-4 px-5 py-3"
+        style={{ borderBottom: '1px solid var(--border)', overflowX: 'auto' }}
       >
         {FILTERS.map((f) => (
-          <button
+          <span
             key={f.value}
             onClick={() => setFilter(f.value)}
             style={{
-              flexShrink: 0,
-              padding: '6px 14px',
-              borderRadius: 'var(--radius)',
-              fontSize: '11px',
+              fontSize: '12px',
               fontFamily: 'var(--font-mono)',
-              fontWeight: 400,
+              color: filter === f.value ? 'var(--accent)' : 'var(--text-3)',
               cursor: 'pointer',
               whiteSpace: 'nowrap',
-              transition: 'all 0.15s',
-              letterSpacing: '0.3px',
-              ...(filter === f.value
-                ? { background: 'var(--accent)', border: '1px solid var(--accent)', color: 'var(--bg)' }
-                : { background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text-2)' }),
+              borderBottom: filter === f.value ? '1px solid var(--accent)' : '1px solid transparent',
+              paddingBottom: '2px',
             }}
           >
             {f.label}
-          </button>
+          </span>
         ))}
       </div>
 
-      {/* Ticket list */}
-      <div className="flex flex-col gap-2 px-5 pt-4">
+      {/* Tickets */}
+      <div className="px-5 pt-2">
         {dataLoading ? (
           [1, 2, 3].map((i) => (
-            <div key={i} className="skeleton" style={{ height: '64px' }} />
+            <div key={i} className="skeleton" style={{ height: '56px', marginBottom: '1px' }} />
           ))
         ) : filtered.length > 0 ? (
           filtered.map((ticket) => (
@@ -124,12 +118,11 @@ export default function AdminPage() {
             />
           ))
         ) : (
-          <div className="text-center py-16">
+          <div className="py-16">
             <p
               style={{
                 fontSize: '13px',
                 fontFamily: 'var(--font-mono)',
-                fontWeight: 400,
                 color: 'var(--text-3)',
               }}
             >

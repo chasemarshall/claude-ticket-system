@@ -29,26 +29,17 @@ export default function Header({ title, showBack, showAvatar, action }: HeaderPr
     >
       <div className="flex items-center gap-3">
         {showBack && (
-          <button
+          <span
             onClick={() => router.back()}
             style={{
-              width: '34px',
-              height: '34px',
-              borderRadius: 'var(--radius)',
-              background: 'var(--surface)',
-              border: '1px solid var(--border)',
-              color: 'var(--text-2)',
-              fontSize: '14px',
               fontFamily: 'var(--font-mono)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              fontSize: '14px',
+              color: 'var(--text-3)',
               cursor: 'pointer',
-              flexShrink: 0,
             }}
           >
             &lt;-
-          </button>
+          </span>
         )}
         <h2
           style={{
@@ -64,30 +55,22 @@ export default function Header({ title, showBack, showAvatar, action }: HeaderPr
         </h2>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         {action}
         {showAvatar && member && (
-          <button
+          <span
             onClick={clearUser}
-            title="Tap to log out"
             style={{
-              width: '34px',
-              height: '34px',
-              borderRadius: 'var(--radius)',
-              background: `color-mix(in srgb, ${member.color} 15%, transparent)`,
-              border: `1px solid color-mix(in srgb, ${member.color} 30%, transparent)`,
               fontFamily: 'var(--font-mono)',
-              fontSize: '12px',
+              fontSize: '13px',
               fontWeight: 700,
               color: member.color,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
               cursor: 'pointer',
             }}
+            title="tap to log out"
           >
-            {member.name.charAt(0).toLowerCase()}
-          </button>
+            {member.name.toLowerCase()}
+          </span>
         )}
       </div>
     </header>

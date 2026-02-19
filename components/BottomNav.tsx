@@ -4,73 +4,17 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useSession } from '@/contexts/SessionContext'
 
-/* SVG Icons */
-
-function IconHome({ size = 20 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z" />
-      <path d="M9 21V12h6v9" />
-    </svg>
-  )
-}
-
-function IconTicket({ size = 20 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="6" width="20" height="12" rx="2" />
-      <path d="M8 6v12M2 10h2M2 14h2M20 10h2M20 14h2" />
-    </svg>
-  )
-}
-
-function IconPlus({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <path d="M12 5v14M5 12h14" />
-    </svg>
-  )
-}
-
-function IconList({ size = 20 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="4" width="18" height="16" rx="2" />
-      <path d="M7 9h10M7 13h7" />
-    </svg>
-  )
-}
-
-function IconMegaphone({ size = 20 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M19 9.5V7a1 1 0 0 0-1.447-.894L5 12H3a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2l4.553 1.79" />
-      <path d="M19 9.5c.667.5 1 1.167 1 2s-.333 1.5-1 2" />
-      <path d="M7 16l1.5 4" />
-    </svg>
-  )
-}
-
-/* Nav config */
-
 const USER_TABS = [
-  { href: '/home',        label: 'home',    Icon: IconHome,   isAction: false },
-  { href: '/tickets',     label: 'tickets', Icon: IconTicket,  isAction: false },
-  { href: '/tickets/new', label: 'new',     Icon: IconPlus,    isAction: true  },
+  { href: '/home',        label: 'home'    },
+  { href: '/tickets',     label: 'tickets' },
+  { href: '/tickets/new', label: '+ new'   },
 ]
 
 const ADMIN_TABS = [
-  { href: '/home',                label: 'home',     Icon: IconHome,      isAction: false },
-  { href: '/admin',               label: 'tickets',  Icon: IconList,      isAction: false },
-  { href: '/admin/announcements', label: 'announce',  Icon: IconMegaphone, isAction: false },
+  { href: '/home',                label: 'home'     },
+  { href: '/admin',               label: 'tickets'  },
+  { href: '/admin/announcements', label: 'announce' },
 ]
-
-/* Component */
 
 export default function BottomNav() {
   const { user, isAdmin } = useSession()
@@ -89,90 +33,32 @@ export default function BottomNav() {
         transform: 'translateX(-50%)',
         width: '100%',
         maxWidth: '430px',
-        background: 'var(--surface)',
+        background: 'var(--bg)',
         borderTop: '1px solid var(--border)',
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
         zIndex: 50,
       }}
     >
-      <div className="flex items-center justify-around px-2 py-1">
+      <div className="flex items-center justify-around px-4 py-3">
         {tabs.map((tab) => {
           const isActive = pathname === tab.href
-
-          if (tab.isAction) {
-            return (
-              <Link
-                key={tab.href}
-                href={tab.href}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '3px',
-                  padding: '8px 0',
-                  flex: 1,
-                  textDecoration: 'none',
-                }}
-              >
-                <div
-                  style={{
-                    width: '36px',
-                    height: '36px',
-                    borderRadius: 'var(--radius)',
-                    background: 'var(--accent)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'var(--bg)',
-                  }}
-                >
-                  <tab.Icon size={18} />
-                </div>
-                <span
-                  style={{
-                    fontSize: '9px',
-                    fontFamily: 'var(--font-mono)',
-                    color: 'var(--accent)',
-                    letterSpacing: '0.5px',
-                  }}
-                >
-                  {tab.label}
-                </span>
-              </Link>
-            )
-          }
+          const isNew = tab.label === '+ new'
 
           return (
             <Link
               key={tab.href}
               href={tab.href}
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '3px',
-                padding: '10px 0',
-                flex: 1,
+                fontFamily: 'var(--font-mono)',
+                fontSize: '12px',
+                fontWeight: isActive ? 700 : 400,
+                color: isNew ? 'var(--accent)' : isActive ? 'var(--text-1)' : 'var(--text-3)',
                 textDecoration: 'none',
-                color: isActive ? 'var(--accent)' : 'var(--text-3)',
-                transition: 'color 0.15s',
+                padding: '4px 0',
+                borderBottom: isActive && !isNew ? '1px solid var(--text-1)' : '1px solid transparent',
               }}
             >
-              <tab.Icon size={20} />
-              {isActive && (
-                <span
-                  style={{
-                    fontSize: '9px',
-                    fontFamily: 'var(--font-mono)',
-                    letterSpacing: '0.5px',
-                    fontWeight: 400,
-                    color: 'var(--accent)',
-                  }}
-                >
-                  {tab.label}
-                </span>
-              )}
+              {tab.label}
             </Link>
           )
         })}

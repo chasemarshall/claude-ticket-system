@@ -9,25 +9,15 @@ import Header from '@/components/Header'
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
-  background: 'var(--surface)',
-  border: '1px solid var(--border)',
-  borderRadius: 'var(--radius)',
-  padding: '13px 16px',
+  background: 'transparent',
+  border: 'none',
+  borderBottom: '1px solid var(--border)',
+  padding: '12px 0',
   fontSize: '14px',
   fontFamily: 'var(--font-outfit)',
   fontWeight: 400,
   color: 'var(--text-1)',
   outline: 'none',
-}
-
-const labelStyle: React.CSSProperties = {
-  display: 'block',
-  fontSize: '10px',
-  fontFamily: 'var(--font-mono)',
-  fontWeight: 400,
-  color: 'var(--text-3)',
-  letterSpacing: '1px',
-  marginBottom: '10px',
 }
 
 export default function NewAnnouncementPage() {
@@ -48,7 +38,7 @@ export default function NewAnnouncementPage() {
   if (loading || !user || !isAdmin) return null
 
   const handleSubmit = async () => {
-    if (!title.trim()) { showToast('Please add a title', 'error'); return }
+    if (!title.trim()) { showToast('add a title', 'error'); return }
 
     setSubmitting(true)
     const { error } = await supabase.from('announcements').insert({
@@ -58,10 +48,10 @@ export default function NewAnnouncementPage() {
     })
 
     if (error) {
-      showToast('Failed to post announcement', 'error')
+      showToast('failed to post', 'error')
       setSubmitting(false)
     } else {
-      showToast('Announcement posted')
+      showToast('posted')
       router.push('/admin/announcements')
     }
   }
@@ -78,124 +68,119 @@ export default function NewAnnouncementPage() {
     >
       <Header title="new post" showBack />
 
-      <div className="flex flex-col gap-6 px-5 pt-6">
+      <div className="px-5 pt-6">
         {/* Title */}
-        <div>
-          <label style={labelStyle}>title</label>
+        <div style={{ marginBottom: '24px' }}>
+          <p
+            style={{
+              fontSize: '10px',
+              fontFamily: 'var(--font-mono)',
+              color: 'var(--text-3)',
+              marginBottom: '4px',
+            }}
+          >
+            # title
+          </p>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="What's the announcement?"
+            placeholder="what's the announcement?"
             style={inputStyle}
-            onFocus={(e) => (e.target.style.borderColor = 'var(--accent)')}
-            onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
+            onFocus={(e) => (e.target.style.borderBottomColor = 'var(--accent)')}
+            onBlur={(e) => (e.target.style.borderBottomColor = 'var(--border)')}
           />
         </div>
 
         {/* Content */}
-        <div>
-          <label style={labelStyle}>message</label>
+        <div style={{ marginBottom: '24px' }}>
+          <p
+            style={{
+              fontSize: '10px',
+              fontFamily: 'var(--font-mono)',
+              color: 'var(--text-3)',
+              marginBottom: '4px',
+            }}
+          >
+            # message
+          </p>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Details for the family..."
-            rows={5}
+            placeholder="details for the family..."
+            rows={4}
             style={{ ...inputStyle, resize: 'none' }}
-            onFocus={(e) => (e.target.style.borderColor = 'var(--accent)')}
-            onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
+            onFocus={(e) => (e.target.style.borderBottomColor = 'var(--accent)')}
+            onBlur={(e) => (e.target.style.borderBottomColor = 'var(--border)')}
           />
         </div>
 
         {/* Pin toggle */}
-        <div>
-          <label style={labelStyle}>options</label>
-          <div
-            onClick={() => setPinned(!pinned)}
-            className="cursor-pointer"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              background: 'var(--surface)',
-              border: `1px solid ${pinned ? 'var(--accent)' : 'var(--border)'}`,
-              borderRadius: 'var(--radius)',
-              padding: '14px 16px',
-              transition: 'border-color 0.15s',
-            }}
-          >
-            <div>
-              <div
-                style={{
-                  fontSize: '13px',
-                  fontFamily: 'var(--font-mono)',
-                  color: 'var(--text-1)',
-                  fontWeight: 400,
-                }}
-              >
-                pin this post
-              </div>
-              <div
-                style={{
-                  fontSize: '11px',
-                  fontFamily: 'var(--font-outfit)',
-                  fontWeight: 300,
-                  color: 'var(--text-3)',
-                  marginTop: '2px',
-                }}
-              >
-                Pinned posts appear first
-              </div>
-            </div>
-            {/* Toggle */}
+        <div
+          onClick={() => setPinned(!pinned)}
+          className="cursor-pointer"
+          style={{
+            padding: '14px 0',
+            borderTop: '1px solid var(--border)',
+            borderBottom: '1px solid var(--border)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '24px',
+          }}
+        >
+          <div>
             <div
               style={{
-                width: '44px',
-                height: '26px',
-                borderRadius: '13px',
-                background: pinned ? 'var(--accent)' : 'var(--border)',
-                position: 'relative',
-                transition: 'background 0.2s',
-                flexShrink: 0,
+                fontSize: '13px',
+                fontFamily: 'var(--font-mono)',
+                color: 'var(--text-1)',
               }}
             >
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '3px',
-                  left: pinned ? '21px' : '3px',
-                  width: '20px',
-                  height: '20px',
-                  borderRadius: '50%',
-                  background: 'var(--text-1)',
-                  transition: 'left 0.2s',
-                }}
-              />
+              pin this post
+            </div>
+            <div
+              style={{
+                fontSize: '11px',
+                fontFamily: 'var(--font-outfit)',
+                fontWeight: 300,
+                color: 'var(--text-3)',
+                marginTop: '2px',
+              }}
+            >
+              pinned posts appear first
             </div>
           </div>
+          <span
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '12px',
+              color: pinned ? 'var(--accent)' : 'var(--text-3)',
+            }}
+          >
+            {pinned ? '[x]' : '[ ]'}
+          </span>
         </div>
 
         {/* Submit */}
-        <button
-          onClick={handleSubmit}
-          disabled={submitting}
+        <div
+          onClick={!submitting ? handleSubmit : undefined}
           style={{
-            width: '100%',
-            background: submitting ? 'var(--card)' : 'var(--accent)',
-            color: submitting ? 'var(--text-3)' : 'var(--bg)',
-            border: 'none',
-            borderRadius: 'var(--radius)',
-            padding: '14px',
-            fontSize: '13px',
-            fontWeight: 700,
-            fontFamily: 'var(--font-mono)',
+            padding: '14px 0',
             cursor: submitting ? 'not-allowed' : 'pointer',
-            transition: 'all 0.15s',
-            letterSpacing: '0.3px',
           }}
         >
-          {submitting ? 'posting...' : 'post announcement'}
-        </button>
+          <span
+            style={{
+              fontSize: '13px',
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 700,
+              color: submitting ? 'var(--text-3)' : 'var(--accent)',
+            }}
+          >
+            {submitting ? 'posting...' : 'post announcement ->'}
+          </span>
+        </div>
       </div>
     </div>
   )

@@ -81,21 +81,14 @@ export default function HomePage() {
     >
       <Header title="kin" showAvatar />
 
-      {/* Zone 1: Hero greeting */}
-      <div
-        style={{
-          background: 'var(--surface)',
-          borderBottom: '1px solid var(--border)',
-          padding: '24px 20px 20px',
-        }}
-      >
+      {/* Greeting */}
+      <div className="px-5 pt-8 pb-6" style={{ borderBottom: '1px solid var(--border)' }}>
         <p
           style={{
             fontSize: '11px',
             fontFamily: 'var(--font-mono)',
             fontWeight: 400,
             color: 'var(--text-3)',
-            letterSpacing: '1px',
             marginBottom: '4px',
           }}
         >
@@ -114,109 +107,93 @@ export default function HomePage() {
         >
           {user.toLowerCase()}
         </h1>
-        {inlineSummaryParts.length > 0 ? (
-          <p
-            style={{
-              fontSize: '13px',
-              fontFamily: 'var(--font-mono)',
-              fontWeight: 400,
-              color: 'var(--text-2)',
-            }}
-          >
-            {inlineSummaryParts.join(' / ')}
-          </p>
-        ) : (
-          <p
-            style={{
-              fontSize: '13px',
-              fontFamily: 'var(--font-mono)',
-              fontWeight: 400,
-              color: 'var(--text-3)',
-            }}
-          >
-            all clear
-          </p>
-        )}
+        <p
+          style={{
+            fontSize: '13px',
+            fontFamily: 'var(--font-mono)',
+            fontWeight: 400,
+            color: inlineSummaryParts.length > 0 ? 'var(--text-2)' : 'var(--text-3)',
+          }}
+        >
+          {inlineSummaryParts.length > 0 ? inlineSummaryParts.join(' / ') : 'all clear'}
+        </p>
       </div>
 
-      {/* Zone 2: Stat chips row (admin only) */}
+      {/* Stats row (admin only) */}
       {isAdmin && (
         <div
-          className="flex gap-2 px-5 py-4"
-          style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', flexShrink: 0 }}
+          className="flex gap-6 px-5 py-4"
+          style={{ borderBottom: '1px solid var(--border)' }}
         >
-          <StatCard value={stats.open}       label="Open"        color="var(--green)"  />
-          <StatCard value={stats.inProgress} label="In Progress" color="var(--blue)"   />
-          <StatCard value={stats.pending}    label="Pending"     color="var(--yellow)" />
-          <StatCard value={stats.closed}     label="Closed"      color="var(--text-3)" />
+          <StatCard value={stats.open}       label="open"        color="var(--green)"  />
+          <StatCard value={stats.inProgress} label="in progress" color="var(--blue)"   />
+          <StatCard value={stats.pending}    label="pending"     color="var(--yellow)" />
+          <StatCard value={stats.closed}     label="closed"      color="var(--text-3)" />
         </div>
       )}
 
       {/* User submit CTA */}
       {!isAdmin && (
-        <div className="px-5 pt-4">
-          <button
-            onClick={() => router.push('/tickets/new')}
-            style={{
-              width: '100%',
-              background: 'var(--surface)',
-              color: 'var(--text-1)',
-              border: '1px solid var(--border)',
-              borderLeft: '3px solid var(--accent)',
-              borderRadius: 'var(--radius)',
-              padding: '14px 16px',
-              fontSize: '13px',
-              fontWeight: 400,
-              fontFamily: 'var(--font-mono)',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              textAlign: 'left',
-            }}
-          >
-            <span>submit a ticket</span>
-            <span style={{ color: 'var(--text-3)' }}>-&gt;</span>
-          </button>
-        </div>
-      )}
-
-      {/* Zone 3: Announcements */}
-      {announcements.length > 0 && (
-        <div className="pt-5">
-          <p
-            className="px-5 mb-3"
-            style={{
-              fontSize: '10px',
-              fontFamily: 'var(--font-mono)',
-              fontWeight: 400,
-              color: 'var(--text-3)',
-              letterSpacing: '1px',
-            }}
-          >
-            announcements
-          </p>
-          <div className="flex flex-col gap-2 px-5">
-            {announcements.map((a) => (
-              <AnnouncementCard key={a.id} announcement={a} />
-            ))}
+        <div
+          onClick={() => router.push('/tickets/new')}
+          className="px-5 py-4 cursor-pointer"
+          style={{ borderBottom: '1px solid var(--border)' }}
+        >
+          <div className="flex items-center justify-between">
+            <span
+              style={{
+                fontSize: '13px',
+                fontFamily: 'var(--font-mono)',
+                color: 'var(--accent)',
+              }}
+            >
+              submit a ticket
+            </span>
+            <span
+              style={{
+                fontSize: '13px',
+                fontFamily: 'var(--font-mono)',
+                color: 'var(--text-3)',
+              }}
+            >
+              -&gt;
+            </span>
           </div>
         </div>
       )}
 
-      {/* Zone 3: Recent tickets */}
-      <div className="pt-5 pb-2">
-        <div className="flex items-center justify-between px-5 mb-3">
+      {/* Announcements */}
+      {announcements.length > 0 && (
+        <div className="px-5 pt-6">
           <p
             style={{
               fontSize: '10px',
               fontFamily: 'var(--font-mono)',
-              fontWeight: 400,
+              color: 'var(--text-3)',
+              letterSpacing: '1px',
+              marginBottom: '4px',
+            }}
+          >
+            # announcements
+          </p>
+          {announcements.map((a) => (
+            <AnnouncementCard key={a.id} announcement={a} />
+          ))}
+        </div>
+      )}
+
+      {/* Recent tickets */}
+      <div className="px-5 pt-6 pb-2">
+        <div className="flex items-center justify-between mb-2">
+          <p
+            style={{
+              fontSize: '10px',
+              fontFamily: 'var(--font-mono)',
               color: 'var(--text-3)',
               letterSpacing: '1px',
             }}
           >
-            {isAdmin ? 'recent tickets' : 'my tickets'}
+            # {isAdmin ? 'recent tickets' : 'my tickets'}
           </p>
           <span
             onClick={() => router.push(isAdmin ? '/admin' : '/tickets')}
@@ -224,7 +201,6 @@ export default function HomePage() {
               fontSize: '11px',
               fontFamily: 'var(--font-mono)',
               color: 'var(--accent)',
-              letterSpacing: '0.5px',
               cursor: 'pointer',
             }}
           >
@@ -233,13 +209,13 @@ export default function HomePage() {
         </div>
 
         {dataLoading ? (
-          <div className="flex flex-col gap-2 px-5">
+          <div className="flex flex-col gap-0">
             {[1, 2].map((i) => (
-              <div key={i} className="skeleton" style={{ height: '64px' }} />
+              <div key={i} className="skeleton" style={{ height: '56px', marginBottom: '1px' }} />
             ))}
           </div>
         ) : recentTickets.length > 0 ? (
-          <div className="flex flex-col gap-2 px-5">
+          <div>
             {recentTickets.map((ticket) => (
               <TicketCard
                 key={ticket.id}
@@ -250,12 +226,11 @@ export default function HomePage() {
             ))}
           </div>
         ) : (
-          <div className="px-5 text-center py-10">
+          <div className="py-10">
             <p
               style={{
                 fontSize: '13px',
                 fontFamily: 'var(--font-mono)',
-                fontWeight: 400,
                 color: 'var(--text-3)',
               }}
             >
