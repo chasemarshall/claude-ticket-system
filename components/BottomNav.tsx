@@ -6,7 +6,7 @@ import { useSession } from '@/contexts/SessionContext'
 
 /* SVG Icons */
 
-function IconHome({ size = 22 }: { size?: number }) {
+function IconHome({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
       stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -16,7 +16,7 @@ function IconHome({ size = 22 }: { size?: number }) {
   )
 }
 
-function IconTicket({ size = 22 }: { size?: number }) {
+function IconTicket({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
       stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -26,7 +26,7 @@ function IconTicket({ size = 22 }: { size?: number }) {
   )
 }
 
-function IconPlus({ size = 20 }: { size?: number }) {
+function IconPlus({ size = 18 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
       stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -35,7 +35,7 @@ function IconPlus({ size = 20 }: { size?: number }) {
   )
 }
 
-function IconList({ size = 22 }: { size?: number }) {
+function IconList({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
       stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -45,7 +45,7 @@ function IconList({ size = 22 }: { size?: number }) {
   )
 }
 
-function IconMegaphone({ size = 22 }: { size?: number }) {
+function IconMegaphone({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
       stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -59,15 +59,15 @@ function IconMegaphone({ size = 22 }: { size?: number }) {
 /* Nav config */
 
 const USER_TABS = [
-  { href: '/home',        label: 'Home',       Icon: IconHome,      isAction: false },
-  { href: '/tickets',     label: 'My Tickets', Icon: IconTicket,    isAction: false },
-  { href: '/tickets/new', label: 'New',        Icon: IconPlus,      isAction: true  },
+  { href: '/home',        label: 'home',    Icon: IconHome,   isAction: false },
+  { href: '/tickets',     label: 'tickets', Icon: IconTicket,  isAction: false },
+  { href: '/tickets/new', label: 'new',     Icon: IconPlus,    isAction: true  },
 ]
 
 const ADMIN_TABS = [
-  { href: '/home',                   label: 'Home',     Icon: IconHome,      isAction: false },
-  { href: '/admin',                  label: 'Tickets',  Icon: IconList,      isAction: false },
-  { href: '/admin/announcements',    label: 'Announce', Icon: IconMegaphone, isAction: false },
+  { href: '/home',                label: 'home',     Icon: IconHome,      isAction: false },
+  { href: '/admin',               label: 'tickets',  Icon: IconList,      isAction: false },
+  { href: '/admin/announcements', label: 'announce',  Icon: IconMegaphone, isAction: false },
 ]
 
 /* Component */
@@ -117,9 +117,9 @@ export default function BottomNav() {
               >
                 <div
                   style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '8px',
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: 'var(--radius)',
                     background: 'var(--accent)',
                     display: 'flex',
                     alignItems: 'center',
@@ -127,14 +127,13 @@ export default function BottomNav() {
                     color: 'var(--bg)',
                   }}
                 >
-                  <tab.Icon size={20} />
+                  <tab.Icon size={18} />
                 </div>
                 <span
                   style={{
                     fontSize: '9px',
-                    fontFamily: 'var(--font-outfit)',
+                    fontFamily: 'var(--font-mono)',
                     color: 'var(--accent)',
-                    textTransform: 'uppercase',
                     letterSpacing: '0.5px',
                   }}
                 >
@@ -160,15 +159,14 @@ export default function BottomNav() {
                 transition: 'color 0.15s',
               }}
             >
-              <tab.Icon size={22} />
+              <tab.Icon size={20} />
               {isActive && (
                 <span
                   style={{
                     fontSize: '9px',
-                    fontFamily: 'var(--font-outfit)',
-                    textTransform: 'uppercase',
+                    fontFamily: 'var(--font-mono)',
                     letterSpacing: '0.5px',
-                    fontWeight: 500,
+                    fontWeight: 400,
                     color: 'var(--accent)',
                   }}
                 >

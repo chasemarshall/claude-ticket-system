@@ -23,74 +23,60 @@ export default function TicketCard({ ticket, onClick, showAuthor }: TicketCardPr
       onClick={onClick}
       className="list-item animate-entry cursor-pointer transition-colors duration-150"
       style={{
-        background: 'var(--card)',
+        background: 'var(--surface)',
         border: '1px solid var(--border)',
-        borderRadius: '10px',
-        padding: '12px',
+        borderRadius: 'var(--radius)',
+        padding: '14px 16px',
         display: 'flex',
         alignItems: 'flex-start',
         gap: '12px',
       }}
-      onMouseDown={(e) => {
-        const el = e.currentTarget
-        el.style.borderColor = 'var(--accent)'
-      }}
-      onMouseUp={(e) => {
-        const el = e.currentTarget
-        el.style.borderColor = 'var(--border)'
-      }}
-      onTouchStart={(e) => {
-        const el = e.currentTarget
-        el.style.borderColor = 'var(--accent)'
-      }}
-      onTouchEnd={(e) => {
-        const el = e.currentTarget
-        el.style.borderColor = 'var(--border)'
-      }}
+      onMouseDown={(e) => { e.currentTarget.style.borderColor = 'var(--accent)' }}
+      onMouseUp={(e) => { e.currentTarget.style.borderColor = 'var(--border)' }}
+      onTouchStart={(e) => { e.currentTarget.style.borderColor = 'var(--accent)' }}
+      onTouchEnd={(e) => { e.currentTarget.style.borderColor = 'var(--border)' }}
     >
-      {/* Category icon */}
-      <div
-        style={{
-          width: '36px',
-          height: '36px',
-          flexShrink: 0,
-          background: 'var(--surface)',
-          borderRadius: '6px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '18px',
-        }}
-      >
-        {category.emoji}
-      </div>
-
       {/* Info */}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div
           style={{
-            fontSize: '15px',
+            fontSize: '14px',
             fontWeight: 500,
             fontFamily: 'var(--font-outfit)',
             color: 'var(--text-1)',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
+            marginBottom: '6px',
           }}
         >
           {ticket.title}
         </div>
-        <div
-          style={{
-            fontSize: '12px',
-            fontFamily: 'var(--font-outfit)',
-            fontWeight: 300,
-            color: 'var(--text-3)',
-            marginTop: '3px',
-          }}
-        >
-          {showAuthor ? `${ticket.author} · ` : ''}
-          {timeAgo(ticket.created_at)} · {category.name}
+        <div className="flex items-center gap-2" style={{ flexWrap: 'wrap' }}>
+          <span
+            style={{
+              fontSize: '10px',
+              fontFamily: 'var(--font-mono)',
+              color: 'var(--text-3)',
+              background: 'var(--card)',
+              padding: '2px 6px',
+              borderRadius: 'var(--radius)',
+              letterSpacing: '0.5px',
+            }}
+          >
+            {category.name.toLowerCase()}
+          </span>
+          <span
+            style={{
+              fontSize: '11px',
+              fontFamily: 'var(--font-outfit)',
+              fontWeight: 300,
+              color: 'var(--text-3)',
+            }}
+          >
+            {showAuthor ? `${ticket.author} · ` : ''}
+            {timeAgo(ticket.created_at)}
+          </span>
         </div>
       </div>
 

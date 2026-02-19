@@ -10,11 +10,11 @@ import TicketCard from '@/components/TicketCard'
 import StatCard from '@/components/StatCard'
 
 const FILTERS = [
-  { value: 'all',         label: 'All'         },
-  { value: 'open',        label: 'Open'        },
-  { value: 'in-progress', label: 'In Progress' },
-  { value: 'pending',     label: 'Pending'     },
-  { value: 'closed',      label: 'Closed'      },
+  { value: 'all',         label: 'all'         },
+  { value: 'open',        label: 'open'        },
+  { value: 'in-progress', label: 'in progress' },
+  { value: 'pending',     label: 'pending'     },
+  { value: 'closed',      label: 'closed'      },
 ]
 
 export default function AdminPage() {
@@ -65,7 +65,7 @@ export default function AdminPage() {
         paddingBottom: 'calc(80px + env(safe-area-inset-bottom, 0px))',
       }}
     >
-      <Header title="All Tickets" showAvatar />
+      <Header title="all tickets" showAvatar />
 
       {/* Stat chips */}
       <div
@@ -90,16 +90,17 @@ export default function AdminPage() {
             style={{
               flexShrink: 0,
               padding: '6px 14px',
-              borderRadius: '999px',
-              fontSize: '12px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 500,
+              borderRadius: 'var(--radius)',
+              fontSize: '11px',
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 400,
               cursor: 'pointer',
               whiteSpace: 'nowrap',
               transition: 'all 0.15s',
+              letterSpacing: '0.3px',
               ...(filter === f.value
                 ? { background: 'var(--accent)', border: '1px solid var(--accent)', color: 'var(--bg)' }
-                : { background: 'var(--card)', border: '1px solid var(--border)', color: 'var(--text-2)' }),
+                : { background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text-2)' }),
             }}
           >
             {f.label}
@@ -127,12 +128,12 @@ export default function AdminPage() {
             <p
               style={{
                 fontSize: '13px',
-                fontFamily: 'var(--font-outfit)',
-                fontWeight: 300,
+                fontFamily: 'var(--font-mono)',
+                fontWeight: 400,
                 color: 'var(--text-3)',
               }}
             >
-              No {filter !== 'all' ? filter : ''} tickets
+              no {filter !== 'all' ? filter : ''} tickets
             </p>
           </div>
         )}

@@ -12,19 +12,19 @@ export default function StatCard({ value, label, color }: StatCardProps) {
         flexDirection: 'column',
         alignItems: 'center',
         gap: '2px',
-        background: 'var(--card)',
+        background: 'var(--surface)',
         border: '1px solid var(--border)',
-        borderRadius: '999px',
-        padding: '8px 16px',
+        borderRadius: 'var(--radius)',
+        padding: '10px 16px',
         flexShrink: 0,
         minWidth: '72px',
       }}
     >
       <span
         style={{
-          fontSize: '20px',
-          fontWeight: 600,
-          fontFamily: 'var(--font-outfit)',
+          fontSize: '18px',
+          fontWeight: 700,
+          fontFamily: 'var(--font-mono)',
           color,
           lineHeight: 1,
         }}
@@ -35,13 +35,12 @@ export default function StatCard({ value, label, color }: StatCardProps) {
         style={{
           fontSize: '10px',
           fontWeight: 400,
-          fontFamily: 'var(--font-outfit)',
-          color: 'var(--text-2)',
-          textTransform: 'uppercase',
+          fontFamily: 'var(--font-mono)',
+          color: 'var(--text-3)',
           letterSpacing: '0.5px',
         }}
       >
-        {label}
+        {label.toLowerCase()}
       </span>
     </div>
   )

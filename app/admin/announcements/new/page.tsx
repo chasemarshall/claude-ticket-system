@@ -9,15 +9,25 @@ import Header from '@/components/Header'
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
-  background: 'var(--card)',
+  background: 'var(--surface)',
   border: '1px solid var(--border)',
-  borderRadius: '8px',
+  borderRadius: 'var(--radius)',
   padding: '13px 16px',
-  fontSize: '15px',
+  fontSize: '14px',
   fontFamily: 'var(--font-outfit)',
-  fontWeight: 300,
+  fontWeight: 400,
   color: 'var(--text-1)',
   outline: 'none',
+}
+
+const labelStyle: React.CSSProperties = {
+  display: 'block',
+  fontSize: '10px',
+  fontFamily: 'var(--font-mono)',
+  fontWeight: 400,
+  color: 'var(--text-3)',
+  letterSpacing: '1px',
+  marginBottom: '10px',
 }
 
 export default function NewAnnouncementPage() {
@@ -51,7 +61,7 @@ export default function NewAnnouncementPage() {
       showToast('Failed to post announcement', 'error')
       setSubmitting(false)
     } else {
-      showToast('Announcement posted ✓')
+      showToast('Announcement posted')
       router.push('/admin/announcements')
     }
   }
@@ -66,25 +76,12 @@ export default function NewAnnouncementPage() {
         paddingBottom: 'calc(32px + env(safe-area-inset-bottom, 0px))',
       }}
     >
-      <Header title="New Post" showBack />
+      <Header title="new post" showBack />
 
       <div className="flex flex-col gap-6 px-5 pt-6">
         {/* Title */}
         <div>
-          <label
-            style={{
-              display: 'block',
-              fontSize: '11px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 500,
-              color: 'var(--text-3)',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              marginBottom: '10px',
-            }}
-          >
-            Title
-          </label>
+          <label style={labelStyle}>title</label>
           <input
             type="text"
             value={title}
@@ -98,20 +95,7 @@ export default function NewAnnouncementPage() {
 
         {/* Content */}
         <div>
-          <label
-            style={{
-              display: 'block',
-              fontSize: '11px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 500,
-              color: 'var(--text-3)',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              marginBottom: '10px',
-            }}
-          >
-            Message
-          </label>
+          <label style={labelStyle}>message</label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -125,20 +109,7 @@ export default function NewAnnouncementPage() {
 
         {/* Pin toggle */}
         <div>
-          <label
-            style={{
-              display: 'block',
-              fontSize: '11px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 500,
-              color: 'var(--text-3)',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              marginBottom: '10px',
-            }}
-          >
-            Options
-          </label>
+          <label style={labelStyle}>options</label>
           <div
             onClick={() => setPinned(!pinned)}
             className="cursor-pointer"
@@ -146,37 +117,34 @@ export default function NewAnnouncementPage() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              background: 'var(--card)',
+              background: 'var(--surface)',
               border: `1px solid ${pinned ? 'var(--accent)' : 'var(--border)'}`,
-              borderRadius: '8px',
+              borderRadius: 'var(--radius)',
               padding: '14px 16px',
               transition: 'border-color 0.15s',
             }}
           >
-            <div className="flex items-center gap-3">
-              <span style={{ fontSize: '18px' }}>📌</span>
-              <div>
-                <div
-                  style={{
-                    fontSize: '14px',
-                    fontFamily: 'var(--font-outfit)',
-                    color: 'var(--text-1)',
-                    fontWeight: 500,
-                  }}
-                >
-                  Pin this announcement
-                </div>
-                <div
-                  style={{
-                    fontSize: '11px',
-                    fontFamily: 'var(--font-outfit)',
-                    fontWeight: 300,
-                    color: 'var(--text-3)',
-                    marginTop: '2px',
-                  }}
-                >
-                  Pinned posts appear first
-                </div>
+            <div>
+              <div
+                style={{
+                  fontSize: '13px',
+                  fontFamily: 'var(--font-mono)',
+                  color: 'var(--text-1)',
+                  fontWeight: 400,
+                }}
+              >
+                pin this post
+              </div>
+              <div
+                style={{
+                  fontSize: '11px',
+                  fontFamily: 'var(--font-outfit)',
+                  fontWeight: 300,
+                  color: 'var(--text-3)',
+                  marginTop: '2px',
+                }}
+              >
+                Pinned posts appear first
               </div>
             </div>
             {/* Toggle */}
@@ -216,16 +184,17 @@ export default function NewAnnouncementPage() {
             background: submitting ? 'var(--card)' : 'var(--accent)',
             color: submitting ? 'var(--text-3)' : 'var(--bg)',
             border: 'none',
-            borderRadius: '10px',
-            padding: '15px',
-            fontSize: '15px',
-            fontWeight: 600,
-            fontFamily: 'var(--font-outfit)',
+            borderRadius: 'var(--radius)',
+            padding: '14px',
+            fontSize: '13px',
+            fontWeight: 700,
+            fontFamily: 'var(--font-mono)',
             cursor: submitting ? 'not-allowed' : 'pointer',
             transition: 'all 0.15s',
+            letterSpacing: '0.3px',
           }}
         >
-          {submitting ? 'Posting...' : 'Post Announcement'}
+          {submitting ? 'posting...' : 'post announcement'}
         </button>
       </div>
     </div>

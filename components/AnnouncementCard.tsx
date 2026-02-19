@@ -9,10 +9,10 @@ export default function AnnouncementCard({ announcement }: AnnouncementCardProps
   return (
     <div
       style={{
-        background: 'var(--card)',
+        background: 'var(--surface)',
         border: '1px solid var(--border)',
-        borderLeft: `3px solid ${announcement.pinned ? 'var(--yellow)' : 'var(--border-light)'}`,
-        borderRadius: '10px',
+        borderLeft: `3px solid ${announcement.pinned ? 'var(--yellow)' : 'var(--border)'}`,
+        borderRadius: 'var(--radius)',
         padding: '14px 16px',
       }}
     >
@@ -20,20 +20,19 @@ export default function AnnouncementCard({ announcement }: AnnouncementCardProps
         <div
           style={{
             fontSize: '10px',
-            fontFamily: 'var(--font-outfit)',
-            fontWeight: 600,
+            fontFamily: 'var(--font-mono)',
+            fontWeight: 400,
             color: 'var(--yellow)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.6px',
+            letterSpacing: '0.5px',
             marginBottom: '6px',
           }}
         >
-          Pinned
+          pinned
         </div>
       )}
       <h4
         style={{
-          fontSize: '15px',
+          fontSize: '14px',
           fontWeight: 500,
           fontFamily: 'var(--font-outfit)',
           color: 'var(--text-1)',
@@ -61,7 +60,7 @@ export default function AnnouncementCard({ announcement }: AnnouncementCardProps
       <div
         style={{
           fontSize: '11px',
-          fontFamily: 'var(--font-outfit)',
+          fontFamily: 'var(--font-mono)',
           color: 'var(--text-3)',
           marginTop: '10px',
         }}

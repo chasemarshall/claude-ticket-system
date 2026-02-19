@@ -42,7 +42,7 @@ export default function AnnouncementsPage() {
       setAnnouncements((prev) =>
         prev.map((a) => (a.id === ann.id ? { ...a, pinned: !ann.pinned } : a))
       )
-      showToast(ann.pinned ? 'Unpinned' : 'Pinned ✓')
+      showToast(ann.pinned ? 'Unpinned' : 'Pinned')
     }
   }
 
@@ -62,16 +62,16 @@ export default function AnnouncementsPage() {
       style={{
         width: '34px',
         height: '34px',
-        borderRadius: '8px',
-        background: 'var(--card)',
+        borderRadius: 'var(--radius)',
+        background: 'var(--surface)',
         border: '1px solid var(--border)',
         color: 'var(--accent)',
-        fontSize: '20px',
+        fontSize: '16px',
+        fontFamily: 'var(--font-mono)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         cursor: 'pointer',
-        fontWeight: 300,
       }}
     >
       +
@@ -88,7 +88,7 @@ export default function AnnouncementsPage() {
         paddingBottom: 'calc(80px + env(safe-area-inset-bottom, 0px))',
       }}
     >
-      <Header title="Announcements" showAvatar action={AddButton} />
+      <Header title="announcements" showAvatar action={AddButton} />
 
       <div className="flex flex-col gap-3 px-5 pt-5">
         {dataLoading ? (
@@ -100,10 +100,10 @@ export default function AnnouncementsPage() {
             <div
               key={ann.id}
               style={{
-                background: 'var(--card)',
+                background: 'var(--surface)',
                 border: '1px solid var(--border)',
-                borderLeft: `3px solid ${ann.pinned ? 'var(--yellow)' : 'var(--border-light)'}`,
-                borderRadius: '10px',
+                borderLeft: `3px solid ${ann.pinned ? 'var(--yellow)' : 'var(--border)'}`,
+                borderRadius: 'var(--radius)',
                 padding: '16px',
               }}
             >
@@ -111,20 +111,19 @@ export default function AnnouncementsPage() {
                 <div
                   style={{
                     fontSize: '10px',
-                    fontFamily: 'var(--font-outfit)',
+                    fontFamily: 'var(--font-mono)',
                     color: 'var(--yellow)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.6px',
-                    fontWeight: 600,
+                    letterSpacing: '0.5px',
+                    fontWeight: 400,
                     marginBottom: '6px',
                   }}
                 >
-                  Pinned
+                  pinned
                 </div>
               )}
               <div
                 style={{
-                  fontSize: '15px',
+                  fontSize: '14px',
                   fontWeight: 500,
                   fontFamily: 'var(--font-outfit)',
                   color: 'var(--text-1)',
@@ -153,7 +152,7 @@ export default function AnnouncementsPage() {
                 <span
                   style={{
                     fontSize: '11px',
-                    fontFamily: 'var(--font-outfit)',
+                    fontFamily: 'var(--font-mono)',
                     color: 'var(--text-3)',
                   }}
                 >
@@ -163,32 +162,32 @@ export default function AnnouncementsPage() {
                   <button
                     onClick={() => togglePin(ann)}
                     style={{
-                      padding: '6px 12px',
-                      borderRadius: '8px',
-                      background: 'var(--surface)',
+                      padding: '5px 12px',
+                      borderRadius: 'var(--radius)',
+                      background: 'var(--card)',
                       border: '1px solid var(--border)',
-                      fontSize: '12px',
-                      fontFamily: 'var(--font-outfit)',
+                      fontSize: '11px',
+                      fontFamily: 'var(--font-mono)',
                       color: ann.pinned ? 'var(--accent)' : 'var(--text-2)',
                       cursor: 'pointer',
                     }}
                   >
-                    {ann.pinned ? 'Unpin' : 'Pin'}
+                    {ann.pinned ? 'unpin' : 'pin'}
                   </button>
                   <button
                     onClick={() => deleteAnn(ann.id)}
                     style={{
-                      padding: '6px 12px',
-                      borderRadius: '8px',
+                      padding: '5px 12px',
+                      borderRadius: 'var(--radius)',
                       background: 'var(--red-dim)',
                       border: '1px solid rgba(243,139,168,0.25)',
-                      fontSize: '12px',
-                      fontFamily: 'var(--font-outfit)',
+                      fontSize: '11px',
+                      fontFamily: 'var(--font-mono)',
                       color: 'var(--red)',
                       cursor: 'pointer',
                     }}
                   >
-                    Delete
+                    delete
                   </button>
                 </div>
               </div>
@@ -199,15 +198,12 @@ export default function AnnouncementsPage() {
             <p
               style={{
                 fontSize: '13px',
-                fontFamily: 'var(--font-outfit)',
-                fontWeight: 300,
+                fontFamily: 'var(--font-mono)',
+                fontWeight: 400,
                 color: 'var(--text-3)',
-                lineHeight: 1.6,
               }}
             >
-              No announcements yet.
-              <br />
-              Tap + to create one.
+              no announcements yet — tap + to create one
             </p>
           </div>
         )}

@@ -12,9 +12,9 @@ import StatCard from '@/components/StatCard'
 
 function getGreeting() {
   const h = new Date().getHours()
-  if (h < 12) return 'Good morning'
-  if (h < 17) return 'Good afternoon'
-  return 'Good evening'
+  if (h < 12) return 'good morning'
+  if (h < 17) return 'good afternoon'
+  return 'good evening'
 }
 
 export default function HomePage() {
@@ -79,24 +79,23 @@ export default function HomePage() {
         paddingBottom: 'calc(80px + env(safe-area-inset-bottom, 0px))',
       }}
     >
-      <Header title="Kin" showAvatar />
+      <Header title="kin" showAvatar />
 
       {/* Zone 1: Hero greeting */}
       <div
         style={{
           background: 'var(--surface)',
           borderBottom: '1px solid var(--border)',
-          padding: '20px 20px 18px',
+          padding: '24px 20px 20px',
         }}
       >
         <p
           style={{
             fontSize: '11px',
-            fontFamily: 'var(--font-outfit)',
-            fontWeight: 300,
+            fontFamily: 'var(--font-mono)',
+            fontWeight: 400,
             color: 'var(--text-3)',
-            textTransform: 'uppercase',
-            letterSpacing: '1.5px',
+            letterSpacing: '1px',
             marginBottom: '4px',
           }}
         >
@@ -104,11 +103,12 @@ export default function HomePage() {
         </p>
         <h1
           style={{
-            fontFamily: 'var(--font-syne)',
-            fontSize: '52px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '36px',
             fontWeight: 700,
             color: 'var(--text-1)',
             lineHeight: 1,
+            letterSpacing: '-1px',
             marginBottom: '8px',
           }}
         >
@@ -118,23 +118,23 @@ export default function HomePage() {
           <p
             style={{
               fontSize: '13px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 300,
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 400,
               color: 'var(--text-2)',
             }}
           >
-            {inlineSummaryParts.join(' · ')}
+            {inlineSummaryParts.join(' / ')}
           </p>
         ) : (
           <p
             style={{
               fontSize: '13px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 300,
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 400,
               color: 'var(--text-3)',
             }}
           >
-            All clear
+            all clear
           </p>
         )}
       </div>
@@ -159,22 +159,24 @@ export default function HomePage() {
             onClick={() => router.push('/tickets/new')}
             style={{
               width: '100%',
-              background: 'var(--accent)',
-              color: 'var(--bg)',
-              border: 'none',
-              borderRadius: '10px',
-              padding: '14px 20px',
-              fontSize: '15px',
-              fontWeight: 600,
-              fontFamily: 'var(--font-outfit)',
+              background: 'var(--surface)',
+              color: 'var(--text-1)',
+              border: '1px solid var(--border)',
+              borderLeft: '3px solid var(--accent)',
+              borderRadius: 'var(--radius)',
+              padding: '14px 16px',
+              fontSize: '13px',
+              fontWeight: 400,
+              fontFamily: 'var(--font-mono)',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
+              textAlign: 'left',
             }}
           >
-            <span>Submit a Ticket</span>
-            <span style={{ fontSize: '12px', fontWeight: 300, opacity: 0.7 }}>Report an issue →</span>
+            <span>submit a ticket</span>
+            <span style={{ color: 'var(--text-3)' }}>-&gt;</span>
           </button>
         </div>
       )}
@@ -185,15 +187,14 @@ export default function HomePage() {
           <p
             className="px-5 mb-3"
             style={{
-              fontSize: '11px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 500,
+              fontSize: '10px',
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 400,
               color: 'var(--text-3)',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
+              letterSpacing: '1px',
             }}
           >
-            Announcements
+            announcements
           </p>
           <div className="flex flex-col gap-2 px-5">
             {announcements.map((a) => (
@@ -208,28 +209,26 @@ export default function HomePage() {
         <div className="flex items-center justify-between px-5 mb-3">
           <p
             style={{
-              fontSize: '11px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 500,
+              fontSize: '10px',
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 400,
               color: 'var(--text-3)',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
+              letterSpacing: '1px',
             }}
           >
-            {isAdmin ? 'Recent Tickets' : 'My Tickets'}
+            {isAdmin ? 'recent tickets' : 'my tickets'}
           </p>
           <span
             onClick={() => router.push(isAdmin ? '/admin' : '/tickets')}
             style={{
               fontSize: '11px',
-              fontFamily: 'var(--font-outfit)',
+              fontFamily: 'var(--font-mono)',
               color: 'var(--accent)',
-              textTransform: 'uppercase',
               letterSpacing: '0.5px',
               cursor: 'pointer',
             }}
           >
-            See all
+            see all -&gt;
           </span>
         </div>
 
@@ -255,12 +254,12 @@ export default function HomePage() {
             <p
               style={{
                 fontSize: '13px',
-                fontFamily: 'var(--font-outfit)',
-                fontWeight: 300,
+                fontFamily: 'var(--font-mono)',
+                fontWeight: 400,
                 color: 'var(--text-3)',
               }}
             >
-              {isAdmin ? 'No tickets yet' : 'No tickets yet. Everything running smoothly!'}
+              {isAdmin ? 'no tickets yet' : 'no tickets yet — all clear'}
             </p>
           </div>
         )}

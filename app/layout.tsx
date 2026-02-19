@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from 'next'
-import { Syne, Outfit } from 'next/font/google'
+import { JetBrains_Mono, Outfit } from 'next/font/google'
 import './globals.css'
 import { SessionProvider } from '@/contexts/SessionContext'
 import { ToastProvider } from '@/contexts/ToastContext'
 import BottomNav from '@/components/BottomNav'
 
-const syne = Syne({
+const mono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '700'],
-  variable: '--font-syne',
+  variable: '--font-mono',
   display: 'swap',
 })
 
@@ -35,7 +35,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${syne.variable} ${outfit.variable}`}>
+    <html lang="en" className={`${mono.variable} ${outfit.variable}`}>
       <body>
         <SessionProvider>
           <ToastProvider>

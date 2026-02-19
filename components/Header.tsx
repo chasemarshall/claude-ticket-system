@@ -34,11 +34,12 @@ export default function Header({ title, showBack, showAvatar, action }: HeaderPr
             style={{
               width: '34px',
               height: '34px',
-              borderRadius: '8px',
-              background: 'var(--card)',
+              borderRadius: 'var(--radius)',
+              background: 'var(--surface)',
               border: '1px solid var(--border)',
               color: 'var(--text-2)',
-              fontSize: '18px',
+              fontSize: '14px',
+              fontFamily: 'var(--font-mono)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -46,16 +47,17 @@ export default function Header({ title, showBack, showAvatar, action }: HeaderPr
               flexShrink: 0,
             }}
           >
-            ←
+            &lt;-
           </button>
         )}
         <h2
           style={{
-            fontFamily: 'var(--font-syne)',
-            fontSize: '22px',
-            fontWeight: 400,
+            fontFamily: 'var(--font-mono)',
+            fontSize: '16px',
+            fontWeight: 700,
             color: 'var(--text-1)',
             lineHeight: 1,
+            letterSpacing: '-0.5px',
           }}
         >
           {title}
@@ -69,19 +71,22 @@ export default function Header({ title, showBack, showAvatar, action }: HeaderPr
             onClick={clearUser}
             title="Tap to log out"
             style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '50%',
-              background: member.colorDim,
-              border: `1px solid ${member.colorBorder}`,
-              fontSize: '18px',
+              width: '34px',
+              height: '34px',
+              borderRadius: 'var(--radius)',
+              background: `color-mix(in srgb, ${member.color} 15%, transparent)`,
+              border: `1px solid color-mix(in srgb, ${member.color} 30%, transparent)`,
+              fontFamily: 'var(--font-mono)',
+              fontSize: '12px',
+              fontWeight: 700,
+              color: member.color,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
             }}
           >
-            {member.emoji}
+            {member.name.charAt(0)}
           </button>
         )}
       </div>

@@ -31,6 +31,9 @@
   --red-dim: rgba(243, 139, 168, 0.15);
   --peach: #fab387;
   --peach-dim: rgba(250, 179, 135, 0.15);
+
+  /* Radius — one value everywhere */
+  --radius: 8px;
 }
 
 html,
@@ -71,7 +74,7 @@ main {
   .text-3      { color: var(--text-3); }
   .text-accent { color: var(--accent); }
   .border-brand { border-color: var(--border); }
-  .font-display { font-family: var(--font-syne), system-ui, sans-serif; }
+  .font-mono   { font-family: var(--font-mono), monospace; }
   .safe-bottom  { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); }
 }
 
@@ -102,7 +105,7 @@ main {
 
 .skeleton {
   animation: skeletonPulse 1.4s ease-in-out infinite;
-  border-radius: 10px;
+  border-radius: var(--radius);
 }
 
 /* Login family card animation */

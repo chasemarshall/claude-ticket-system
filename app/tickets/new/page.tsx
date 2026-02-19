@@ -10,22 +10,32 @@ import { TicketCategory, TicketPriority } from '@/lib/types'
 import Header from '@/components/Header'
 
 const PRIORITIES: { value: TicketPriority; label: string; color: string }[] = [
-  { value: 'low',    label: 'Low',    color: 'var(--green)' },
-  { value: 'medium', label: 'Medium', color: 'var(--peach)' },
-  { value: 'high',   label: 'High',   color: 'var(--red)'   },
+  { value: 'low',    label: 'low',    color: 'var(--green)' },
+  { value: 'medium', label: 'medium', color: 'var(--peach)' },
+  { value: 'high',   label: 'high',   color: 'var(--red)'   },
 ]
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
-  background: 'var(--card)',
+  background: 'var(--surface)',
   border: '1px solid var(--border)',
-  borderRadius: '8px',
+  borderRadius: 'var(--radius)',
   padding: '13px 16px',
-  fontSize: '15px',
+  fontSize: '14px',
   fontFamily: 'var(--font-outfit)',
-  fontWeight: 300,
+  fontWeight: 400,
   color: 'var(--text-1)',
   outline: 'none',
+}
+
+const labelStyle: React.CSSProperties = {
+  display: 'block',
+  fontSize: '10px',
+  fontFamily: 'var(--font-mono)',
+  fontWeight: 400,
+  color: 'var(--text-3)',
+  letterSpacing: '1px',
+  marginBottom: '10px',
 }
 
 export default function NewTicketPage() {
@@ -60,7 +70,7 @@ export default function NewTicketPage() {
       showToast(error.message || 'Failed to submit ticket', 'error')
       setSubmitting(false)
     } else {
-      showToast('Ticket submitted ✓')
+      showToast('Ticket submitted')
       router.push('/tickets')
     }
   }
@@ -75,25 +85,12 @@ export default function NewTicketPage() {
         paddingBottom: 'calc(32px + env(safe-area-inset-bottom, 0px))',
       }}
     >
-      <Header title="New Ticket" showBack />
+      <Header title="new ticket" showBack />
 
       <div className="flex flex-col gap-6 px-5 pt-6">
         {/* Category */}
         <div>
-          <label
-            style={{
-              display: 'block',
-              fontSize: '11px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 500,
-              color: 'var(--text-3)',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              marginBottom: '10px',
-            }}
-          >
-            Category
-          </label>
+          <label style={labelStyle}>category</label>
           <div className="grid grid-cols-3 gap-2">
             {CATEGORIES.map((cat) => {
               const selected = category === cat.id
@@ -104,23 +101,22 @@ export default function NewTicketPage() {
                   className="cursor-pointer transition-colors duration-150"
                   style={{
                     background: selected ? 'var(--card)' : 'var(--surface)',
-                    border: '1px solid var(--border)',
-                    borderLeft: `3px solid ${selected ? 'var(--accent)' : 'var(--border)'}`,
-                    borderRadius: '8px',
+                    border: `1px solid ${selected ? 'var(--accent)' : 'var(--border)'}`,
+                    borderRadius: 'var(--radius)',
                     padding: '12px 8px',
                     textAlign: 'center',
                   }}
                 >
-                  <div style={{ fontSize: '22px', marginBottom: '5px' }}>{cat.emoji}</div>
                   <div
                     style={{
-                      fontSize: '11px',
-                      fontFamily: 'var(--font-outfit)',
-                      fontWeight: 500,
+                      fontSize: '12px',
+                      fontFamily: 'var(--font-mono)',
+                      fontWeight: selected ? 700 : 400,
                       color: selected ? 'var(--accent)' : 'var(--text-2)',
+                      letterSpacing: '0.3px',
                     }}
                   >
-                    {cat.name}
+                    {cat.name.toLowerCase()}
                   </div>
                 </div>
               )
@@ -130,20 +126,7 @@ export default function NewTicketPage() {
 
         {/* Title */}
         <div>
-          <label
-            style={{
-              display: 'block',
-              fontSize: '11px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 500,
-              color: 'var(--text-3)',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              marginBottom: '10px',
-            }}
-          >
-            Title
-          </label>
+          <label style={labelStyle}>title</label>
           <input
             type="text"
             value={title}
@@ -157,22 +140,8 @@ export default function NewTicketPage() {
 
         {/* Description */}
         <div>
-          <label
-            style={{
-              display: 'block',
-              fontSize: '11px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 500,
-              color: 'var(--text-3)',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              marginBottom: '10px',
-            }}
-          >
-            Details{' '}
-            <span style={{ fontWeight: 300, textTransform: 'none', letterSpacing: 0 }}>
-              (optional)
-            </span>
+          <label style={labelStyle}>
+            details <span style={{ color: 'var(--text-3)' }}>(optional)</span>
           </label>
           <textarea
             value={description}
@@ -187,20 +156,7 @@ export default function NewTicketPage() {
 
         {/* Priority */}
         <div>
-          <label
-            style={{
-              display: 'block',
-              fontSize: '11px',
-              fontFamily: 'var(--font-outfit)',
-              fontWeight: 500,
-              color: 'var(--text-3)',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              marginBottom: '10px',
-            }}
-          >
-            Priority
-          </label>
+          <label style={labelStyle}>priority</label>
           <div className="flex gap-2">
             {PRIORITIES.map((p) => {
               const selected = priority === p.value
@@ -211,15 +167,16 @@ export default function NewTicketPage() {
                   style={{
                     flex: 1,
                     padding: '10px 8px',
-                    borderRadius: '8px',
-                    background: selected ? `color-mix(in srgb, ${p.color} 15%, transparent)` : 'var(--card)',
+                    borderRadius: 'var(--radius)',
+                    background: selected ? `color-mix(in srgb, ${p.color} 15%, transparent)` : 'var(--surface)',
                     border: `1px solid ${selected ? p.color : 'var(--border)'}`,
                     color: selected ? p.color : 'var(--text-2)',
-                    fontSize: '13px',
-                    fontWeight: 500,
-                    fontFamily: 'var(--font-outfit)',
+                    fontSize: '12px',
+                    fontWeight: 400,
+                    fontFamily: 'var(--font-mono)',
                     cursor: 'pointer',
                     transition: 'all 0.15s',
+                    letterSpacing: '0.3px',
                   }}
                 >
                   {p.label}
@@ -238,16 +195,17 @@ export default function NewTicketPage() {
             background: submitting ? 'var(--card)' : 'var(--accent)',
             color: submitting ? 'var(--text-3)' : 'var(--bg)',
             border: 'none',
-            borderRadius: '10px',
-            padding: '15px',
-            fontSize: '15px',
-            fontWeight: 600,
-            fontFamily: 'var(--font-outfit)',
+            borderRadius: 'var(--radius)',
+            padding: '14px',
+            fontSize: '13px',
+            fontWeight: 700,
+            fontFamily: 'var(--font-mono)',
             cursor: submitting ? 'not-allowed' : 'pointer',
             transition: 'all 0.15s',
+            letterSpacing: '0.3px',
           }}
         >
-          {submitting ? 'Submitting…' : 'Submit Ticket'}
+          {submitting ? 'submitting...' : 'submit ticket'}
         </button>
       </div>
     </div>

@@ -48,7 +48,7 @@ export default function MyTicketsPage() {
         paddingBottom: 'calc(80px + env(safe-area-inset-bottom, 0px))',
       }}
     >
-      <Header title="My Tickets" showAvatar />
+      <Header title="my tickets" showAvatar />
       <div className="flex flex-col gap-2 px-5 pt-5">
         {dataLoading ? (
           [1, 2, 3].map((i) => (
@@ -64,8 +64,8 @@ export default function MyTicketsPage() {
           ))
         ) : (
           <div className="text-center py-20">
-            <p style={{ fontSize: '13px', fontFamily: 'var(--font-outfit)', fontWeight: 300, color: 'var(--text-3)', lineHeight: 1.6 }}>
-              No tickets yet.<br />Everything running smoothly!
+            <p style={{ fontSize: '13px', fontFamily: 'var(--font-mono)', fontWeight: 400, color: 'var(--text-3)' }}>
+              no tickets yet — all clear
             </p>
           </div>
         )}

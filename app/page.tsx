@@ -36,31 +36,31 @@ export default function LoginPage() {
         paddingBottom: 'calc(24px + env(safe-area-inset-bottom, 0px))',
       }}
     >
-      <div className="text-center mb-10">
+      <div className="text-center mb-12">
         <h1
           style={{
-            fontFamily: 'var(--font-syne)',
-            fontSize: '64px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '48px',
             fontWeight: 700,
             color: 'var(--text-1)',
             lineHeight: 1,
-            letterSpacing: '-1px',
+            letterSpacing: '-2px',
+            textTransform: 'lowercase',
           }}
         >
-          Kin
+          kin
         </h1>
         <p
           style={{
             fontSize: '12px',
-            fontFamily: 'var(--font-outfit)',
-            fontWeight: 300,
+            fontFamily: 'var(--font-mono)',
+            fontWeight: 400,
             color: 'var(--text-3)',
             marginTop: '8px',
-            textTransform: 'uppercase',
-            letterSpacing: '4px',
+            letterSpacing: '2px',
           }}
         >
-          Frazier Family
+          frazier family
         </p>
       </div>
 
@@ -83,14 +83,13 @@ export default function LoginPage() {
       <p
         style={{
           fontSize: '11px',
-          fontFamily: 'var(--font-outfit)',
+          fontFamily: 'var(--font-mono)',
           color: 'var(--text-3)',
-          marginTop: '12px',
-          textTransform: 'uppercase',
+          marginTop: '16px',
           letterSpacing: '1px',
         }}
       >
-        Who&apos;s using?
+        select user
       </p>
     </div>
   )
@@ -104,57 +103,60 @@ interface MemberCardProps {
 }
 
 function MemberCard({ member, onClick, className, fullWidth }: MemberCardProps) {
+  const initial = member.name.charAt(0).toUpperCase()
+
   return (
     <div
       onClick={onClick}
       className={`cursor-pointer transition-colors duration-150 ${className ?? ''}`}
       style={{
-        background: 'var(--card)',
+        background: 'var(--surface)',
         border: '1px solid var(--border)',
-        borderLeft: `3px solid ${member.color}`,
-        borderRadius: '10px',
-        padding: fullWidth ? '16px 20px' : '16px 12px',
+        borderRadius: 'var(--radius)',
+        padding: fullWidth ? '14px 16px' : '16px 12px',
         display: 'flex',
         flexDirection: fullWidth ? 'row' : 'column',
         alignItems: 'center',
         justifyContent: fullWidth ? 'flex-start' : 'center',
-        gap: fullWidth ? '14px' : '0',
+        gap: fullWidth ? '14px' : '8px',
       }}
     >
       <div
         style={{
-          width: fullWidth ? '48px' : '44px',
-          height: fullWidth ? '48px' : '44px',
-          borderRadius: '50%',
-          background: member.colorDim,
-          border: `1px solid ${member.colorBorder}`,
+          width: '36px',
+          height: '36px',
+          borderRadius: 'var(--radius)',
+          background: `color-mix(in srgb, ${member.color} 15%, transparent)`,
+          border: `1px solid color-mix(in srgb, ${member.color} 30%, transparent)`,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '20px',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '14px',
+          fontWeight: 700,
+          color: member.color,
           flexShrink: 0,
-          marginBottom: fullWidth ? 0 : '10px',
         }}
       >
-        {member.emoji}
+        {initial}
       </div>
       <div style={{ textAlign: fullWidth ? 'left' : 'center' }}>
-        <div style={{ fontSize: '16px', fontWeight: 500, fontFamily: 'var(--font-outfit)', color: 'var(--text-1)' }}>
+        <div style={{ fontSize: '14px', fontWeight: 500, fontFamily: 'var(--font-outfit)', color: 'var(--text-1)' }}>
           {member.name}
         </div>
-        <div
-          style={{
-            fontSize: '10px',
-            fontFamily: 'var(--font-outfit)',
-            color: member.isAdmin ? member.color : 'var(--text-3)',
-            marginTop: '2px',
-            textTransform: 'uppercase',
-            letterSpacing: '0.6px',
-            fontWeight: member.isAdmin ? 600 : 400,
-          }}
-        >
-          {member.isAdmin ? 'Admin' : 'Family'}
-        </div>
+        {member.isAdmin && (
+          <div
+            style={{
+              fontSize: '10px',
+              fontFamily: 'var(--font-mono)',
+              color: 'var(--text-3)',
+              marginTop: '2px',
+              letterSpacing: '0.5px',
+            }}
+          >
+            admin
+          </div>
+        )}
       </div>
     </div>
   )
