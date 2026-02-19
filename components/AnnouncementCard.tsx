@@ -1,5 +1,6 @@
 import { Announcement } from '@/lib/types'
 import { timeAgo } from '@/lib/utils'
+import Linkify from './Linkify'
 
 interface AnnouncementCardProps {
   announcement: Announcement
@@ -40,21 +41,21 @@ export default function AnnouncementCard({ announcement }: AnnouncementCardProps
       >
         {announcement.title}
       </h4>
-      <p
-        style={{
-          fontSize: '13px',
-          fontFamily: 'var(--font-outfit)',
-          fontWeight: 300,
-          color: 'var(--text-2)',
-          lineHeight: 1.55,
-          display: '-webkit-box',
-          WebkitLineClamp: 2,
-          WebkitBoxOrient: 'vertical' as const,
-          overflow: 'hidden',
-        }}
-      >
-        {announcement.content}
-      </p>
+      {announcement.content && (
+        <p
+          style={{
+            fontSize: '13px',
+            fontFamily: 'var(--font-outfit)',
+            fontWeight: 300,
+            color: 'var(--text-2)',
+            lineHeight: 1.55,
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
+          }}
+        >
+          <Linkify>{announcement.content}</Linkify>
+        </p>
+      )}
       <div
         style={{
           fontSize: '11px',

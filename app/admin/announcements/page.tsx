@@ -8,6 +8,7 @@ import { supabase } from '@/lib/supabase'
 import { Announcement } from '@/lib/types'
 import { timeAgo } from '@/lib/utils'
 import Header from '@/components/Header'
+import Linkify from '@/components/Linkify'
 
 export default function AnnouncementsPage() {
   const { user, isAdmin, loading } = useSession()
@@ -121,22 +122,22 @@ export default function AnnouncementsPage() {
               >
                 {ann.title}
               </div>
-              <div
-                style={{
-                  fontSize: '13px',
-                  fontFamily: 'var(--font-outfit)',
-                  fontWeight: 300,
-                  color: 'var(--text-2)',
-                  lineHeight: 1.55,
-                  display: '-webkit-box',
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: 'vertical' as const,
-                  overflow: 'hidden',
-                  marginBottom: '10px',
-                }}
-              >
-                {ann.content}
-              </div>
+              {ann.content && (
+                <div
+                  style={{
+                    fontSize: '13px',
+                    fontFamily: 'var(--font-outfit)',
+                    fontWeight: 300,
+                    color: 'var(--text-2)',
+                    lineHeight: 1.55,
+                    marginBottom: '10px',
+                    whiteSpace: 'pre-wrap',
+                    wordBreak: 'break-word',
+                  }}
+                >
+                  <Linkify>{ann.content}</Linkify>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <span
                   style={{
@@ -148,6 +149,17 @@ export default function AnnouncementsPage() {
                   {timeAgo(ann.created_at)}
                 </span>
                 <div className="flex gap-4">
+                  <span
+                    onClick={() => router.push(`/admin/announcements/${ann.id}`)}
+                    style={{
+                      fontSize: '11px',
+                      fontFamily: 'var(--font-mono)',
+                      color: 'var(--text-2)',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    edit
+                  </span>
                   <span
                     onClick={() => togglePin(ann)}
                     style={{
