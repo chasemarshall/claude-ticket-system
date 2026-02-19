@@ -3,30 +3,34 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0a0907;
-  --surface: #111009;
-  --card: #17140f;
-  --card-hover: #1e1a14;
-  --border: #2b2620;
-  --border-light: #362e28;
-  --text-1: #f0ece3;
-  --text-2: #8a8070;
-  --text-3: #54504a;
-  --accent: #7b6fee;
-  --accent-dim: rgba(123, 111, 238, 0.1);
-  --accent-border: rgba(123, 111, 238, 0.22);
-  --sage: #4ade80;
-  --sage-dim: rgba(74, 222, 128, 0.1);
-  --sage-border: rgba(74, 222, 128, 0.22);
-  --sky: #60a5fa;
-  --sky-dim: rgba(96, 165, 250, 0.1);
-  --sky-border: rgba(96, 165, 250, 0.22);
-  --rose: #f87171;
-  --rose-dim: rgba(248, 113, 113, 0.1);
-  --rose-border: rgba(248, 113, 113, 0.22);
-  --mauve: #a78bfa;
-  --mauve-dim: rgba(167, 139, 250, 0.1);
-  --mauve-border: rgba(167, 139, 250, 0.22);
+  /* Catppuccin Mocha */
+  --bg: #1e1e2e;
+  --surface: #181825;
+  --crust: #11111b;
+  --card: #313244;
+  --card-hover: #45475a;
+  --border: #45475a;
+  --border-light: #585b70;
+  --text-1: #cdd6f4;
+  --text-2: #a6adc8;
+  --text-3: #585b70;
+
+  /* Accent — Mauve */
+  --accent: #cba6f7;
+  --accent-dim: rgba(203, 166, 247, 0.12);
+  --accent-border: rgba(203, 166, 247, 0.35);
+
+  /* Status colors */
+  --green: #a6e3a1;
+  --green-dim: rgba(166, 227, 161, 0.15);
+  --blue: #89b4fa;
+  --blue-dim: rgba(137, 180, 250, 0.15);
+  --yellow: #f9e2af;
+  --yellow-dim: rgba(249, 226, 175, 0.15);
+  --red: #f38ba8;
+  --red-dim: rgba(243, 139, 168, 0.15);
+  --peach: #fab387;
+  --peach-dim: rgba(250, 179, 135, 0.15);
 }
 
 html,
@@ -34,19 +38,17 @@ body {
   height: 100%;
   background: var(--bg);
   color: var(--text-1);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-outfit), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
 }
 
-/* App container */
 #__next,
 main {
   height: 100dvh;
 }
 
-/* Scrollbar hiding */
 * {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -55,61 +57,61 @@ main {
   display: none;
 }
 
-/* Tap highlight */
 * {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Custom utilities */
 @layer utilities {
-  .bg-app {
-    background: var(--bg);
-  }
-  .bg-card {
-    background: var(--card);
-  }
-  .bg-surface {
-    background: var(--surface);
-  }
-  .bg-accent {
-    background: var(--accent);
-  }
-  .text-1 {
-    color: var(--text-1);
-  }
-  .text-2 {
-    color: var(--text-2);
-  }
-  .text-3 {
-    color: var(--text-3);
-  }
-  .text-accent {
-    color: var(--accent);
-  }
-  .border-brand {
-    border-color: var(--border);
-  }
-  .font-display {
-    font-family: var(--font-inter), system-ui, sans-serif;
-  }
-  .safe-bottom {
-    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 80px);
-  }
+  .bg-app      { background: var(--bg); }
+  .bg-card     { background: var(--card); }
+  .bg-surface  { background: var(--surface); }
+  .bg-accent   { background: var(--accent); }
+  .text-1      { color: var(--text-1); }
+  .text-2      { color: var(--text-2); }
+  .text-3      { color: var(--text-3); }
+  .text-accent { color: var(--accent); }
+  .border-brand { border-color: var(--border); }
+  .font-display { font-family: var(--font-syne), system-ui, sans-serif; }
+  .safe-bottom  { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); }
 }
 
-/* Staggered animation delays for family grid */
-.family-card:nth-child(1) {
-  animation-delay: 0ms;
+/* Staggered list entries */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.family-card:nth-child(2) {
-  animation-delay: 80ms;
+
+.animate-entry {
+  animation: fadeSlideUp 200ms ease-out forwards;
 }
-.family-card:nth-child(3) {
-  animation-delay: 80ms;
+
+.list-item:nth-child(1)  { animation-delay: 0ms; }
+.list-item:nth-child(2)  { animation-delay: 40ms; }
+.list-item:nth-child(3)  { animation-delay: 80ms; }
+.list-item:nth-child(4)  { animation-delay: 120ms; }
+.list-item:nth-child(5)  { animation-delay: 160ms; }
+.list-item:nth-child(6)  { animation-delay: 200ms; }
+.list-item:nth-child(7)  { animation-delay: 240ms; }
+.list-item:nth-child(8)  { animation-delay: 280ms; }
+
+/* Skeleton pulse */
+@keyframes skeletonPulse {
+  0%, 100% { background: var(--surface); }
+  50%       { background: var(--card); }
 }
-.family-card:nth-child(4) {
-  animation-delay: 160ms;
+
+.skeleton {
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+  border-radius: 10px;
 }
-.family-card:nth-child(5) {
-  animation-delay: 160ms;
+
+/* Login family card animation */
+.family-card {
+  opacity: 0;
+  animation: fadeSlideUp 200ms ease-out forwards;
 }
+.family-card:nth-child(1) { animation-delay: 0ms; }
+.family-card:nth-child(2) { animation-delay: 60ms; }
+.family-card:nth-child(3) { animation-delay: 60ms; }
+.family-card:nth-child(4) { animation-delay: 120ms; }
+.family-card:nth-child(5) { animation-delay: 120ms; }

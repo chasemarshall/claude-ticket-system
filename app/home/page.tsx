@@ -10,6 +10,13 @@ import TicketCard from '@/components/TicketCard'
 import AnnouncementCard from '@/components/AnnouncementCard'
 import StatCard from '@/components/StatCard'
 
+function getGreeting() {
+  const h = new Date().getHours()
+  if (h < 12) return 'Good morning'
+  if (h < 17) return 'Good afternoon'
+  return 'Good evening'
+}
+
 export default function HomePage() {
   const { user, isAdmin, loading } = useSession()
   const router = useRouter()
@@ -34,29 +41,33 @@ export default function HomePage() {
   useEffect(() => {
     if (loading) return
     if (!user) { router.push('/'); return }
-
     fetchData()
-
     const channel = supabase
       .channel('home-realtime')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'tickets' }, fetchData)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'announcements' }, fetchData)
       .subscribe()
-
     return () => { supabase.removeChannel(channel) }
   }, [user, loading, router, fetchData])
 
   if (loading || !user) return null
 
   const myTickets = tickets.filter((t) => t.author === user)
-  const recentTickets = isAdmin ? tickets.slice(0, 3) : myTickets.slice(0, 3)
+  const recentTickets = isAdmin ? tickets.slice(0, 5) : myTickets.slice(0, 5)
 
   const stats = {
-    open: tickets.filter((t) => t.status === 'open').length,
+    open:       tickets.filter((t) => t.status === 'open').length,
     inProgress: tickets.filter((t) => t.status === 'in-progress').length,
-    pending: tickets.filter((t) => t.status === 'pending').length,
-    closed: tickets.filter((t) => t.status === 'closed').length,
+    pending:    tickets.filter((t) => t.status === 'pending').length,
+    closed:     tickets.filter((t) => t.status === 'closed').length,
   }
+
+  const openCount   = isAdmin ? stats.open : myTickets.filter((t) => t.status === 'open').length
+  const inProgCount = isAdmin ? stats.inProgress : myTickets.filter((t) => t.status === 'in-progress').length
+
+  const inlineSummaryParts = []
+  if (openCount > 0) inlineSummaryParts.push(`${openCount} open`)
+  if (inProgCount > 0) inlineSummaryParts.push(`${inProgCount} in progress`)
 
   return (
     <div
@@ -70,67 +81,121 @@ export default function HomePage() {
     >
       <Header title="Kin" showAvatar />
 
-      {/* Welcome */}
-      <div className="px-5 pt-6 pb-2">
-        <p style={{ fontSize: '11px', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
-          Good to see you
+      {/* Zone 1: Hero greeting */}
+      <div
+        style={{
+          background: 'var(--surface)',
+          borderBottom: '1px solid var(--border)',
+          padding: '20px 20px 18px',
+        }}
+      >
+        <p
+          style={{
+            fontSize: '11px',
+            fontFamily: 'var(--font-outfit)',
+            fontWeight: 300,
+            color: 'var(--text-3)',
+            textTransform: 'uppercase',
+            letterSpacing: '1.5px',
+            marginBottom: '4px',
+          }}
+        >
+          {getGreeting()}
         </p>
-        <h1 className="font-display" style={{ fontSize: '38px', fontWeight: 300, color: 'var(--text-1)', lineHeight: 1 }}>
+        <h1
+          style={{
+            fontFamily: 'var(--font-syne)',
+            fontSize: '52px',
+            fontWeight: 700,
+            color: 'var(--text-1)',
+            lineHeight: 1,
+            marginBottom: '8px',
+          }}
+        >
           {user}
         </h1>
+        {inlineSummaryParts.length > 0 ? (
+          <p
+            style={{
+              fontSize: '13px',
+              fontFamily: 'var(--font-outfit)',
+              fontWeight: 300,
+              color: 'var(--text-2)',
+            }}
+          >
+            {inlineSummaryParts.join(' · ')}
+          </p>
+        ) : (
+          <p
+            style={{
+              fontSize: '13px',
+              fontFamily: 'var(--font-outfit)',
+              fontWeight: 300,
+              color: 'var(--text-3)',
+            }}
+          >
+            All clear
+          </p>
+        )}
       </div>
 
-      {/* Admin: stats */}
+      {/* Zone 2: Stat chips row (admin only) */}
       {isAdmin && (
-        <div className="grid grid-cols-2 gap-3 px-5 pt-5">
-          <StatCard value={stats.open} label="Open" color="var(--sage)" />
-          <StatCard value={stats.inProgress} label="In Progress" color="var(--sky)" />
-          <StatCard value={stats.pending} label="Pending" color="var(--accent)" />
-          <StatCard value={stats.closed} label="Closed" color="var(--text-3)" />
+        <div
+          className="flex gap-2 px-5 py-4"
+          style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', flexShrink: 0 }}
+        >
+          <StatCard value={stats.open}       label="Open"        color="var(--green)"  />
+          <StatCard value={stats.inProgress} label="In Progress" color="var(--blue)"   />
+          <StatCard value={stats.pending}    label="Pending"     color="var(--yellow)" />
+          <StatCard value={stats.closed}     label="Closed"      color="var(--text-3)" />
         </div>
       )}
 
-      {/* User: CTA */}
+      {/* User submit CTA */}
       {!isAdmin && (
-        <div className="px-5 pt-5">
-          <div
+        <div className="px-5 pt-4">
+          <button
             onClick={() => router.push('/tickets/new')}
-            className="cursor-pointer active:opacity-85 active:scale-99 transition-all duration-150"
             style={{
+              width: '100%',
               background: 'var(--accent)',
-              borderRadius: '16px',
-              padding: '18px 20px',
+              color: 'var(--bg)',
+              border: 'none',
+              borderRadius: '10px',
+              padding: '14px 20px',
+              fontSize: '15px',
+              fontWeight: 600,
+              fontFamily: 'var(--font-outfit)',
+              cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
             }}
           >
-            <div>
-              <div style={{ fontSize: '17px', fontWeight: 600, color: '#0a0907' }}>Submit a Ticket</div>
-              <div style={{ fontSize: '12px', color: 'rgba(10,9,7,0.6)', marginTop: '2px' }}>
-                Report an issue to Chase
-              </div>
-            </div>
-            <span style={{ fontSize: '28px' }}>🎫</span>
-          </div>
+            <span>Submit a Ticket</span>
+            <span style={{ fontSize: '12px', fontWeight: 300, opacity: 0.7 }}>Report an issue →</span>
+          </button>
         </div>
       )}
 
-      {/* Announcements */}
+      {/* Zone 3: Announcements */}
       {announcements.length > 0 && (
-        <div className="pt-6">
-          <div className="flex items-center justify-between px-5 mb-3">
-            <h3
-              className="font-display"
-              style={{ fontSize: '22px', fontWeight: 400, color: 'var(--text-1)' }}
-            >
-              Announcements
-            </h3>
-          </div>
-          <div
-            className="flex gap-3 px-5"
-            style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}
+        <div className="pt-5">
+          <p
+            className="px-5 mb-3"
+            style={{
+              fontSize: '11px',
+              fontFamily: 'var(--font-outfit)',
+              fontWeight: 500,
+              color: 'var(--text-3)',
+              textTransform: 'uppercase',
+              letterSpacing: '2px',
+            }}
           >
+            Announcements
+          </p>
+          <div className="flex flex-col gap-2 px-5">
             {announcements.map((a) => (
               <AnnouncementCard key={a.id} announcement={a} />
             ))}
@@ -138,34 +203,40 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* Recent tickets */}
-      <div className="pt-6">
+      {/* Zone 3: Recent tickets */}
+      <div className="pt-5 pb-2">
         <div className="flex items-center justify-between px-5 mb-3">
-          <h3 className="font-display" style={{ fontSize: '22px', fontWeight: 400, color: 'var(--text-1)' }}>
+          <p
+            style={{
+              fontSize: '11px',
+              fontFamily: 'var(--font-outfit)',
+              fontWeight: 500,
+              color: 'var(--text-3)',
+              textTransform: 'uppercase',
+              letterSpacing: '2px',
+            }}
+          >
             {isAdmin ? 'Recent Tickets' : 'My Tickets'}
-          </h3>
+          </p>
           <span
             onClick={() => router.push(isAdmin ? '/admin' : '/tickets')}
-            className="cursor-pointer"
-            style={{ fontSize: '11px', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.5px' }}
+            style={{
+              fontSize: '11px',
+              fontFamily: 'var(--font-outfit)',
+              color: 'var(--accent)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px',
+              cursor: 'pointer',
+            }}
           >
             See all
           </span>
         </div>
 
         {dataLoading ? (
-          <div className="px-5">
+          <div className="flex flex-col gap-2 px-5">
             {[1, 2].map((i) => (
-              <div
-                key={i}
-                style={{
-                  height: '72px',
-                  background: 'var(--card)',
-                  borderRadius: '14px',
-                  marginBottom: '10px',
-                  opacity: 0.5,
-                }}
-              />
+              <div key={i} className="skeleton" style={{ height: '64px' }} />
             ))}
           </div>
         ) : recentTickets.length > 0 ? (
@@ -181,9 +252,15 @@ export default function HomePage() {
           </div>
         ) : (
           <div className="px-5 text-center py-10">
-            <div style={{ fontSize: '36px', opacity: 0.3, marginBottom: '10px' }}>✅</div>
-            <p style={{ fontSize: '14px', color: 'var(--text-3)' }}>
-              {isAdmin ? 'No tickets yet' : 'No tickets from you yet.\nEverything running smoothly!'}
+            <p
+              style={{
+                fontSize: '13px',
+                fontFamily: 'var(--font-outfit)',
+                fontWeight: 300,
+                color: 'var(--text-3)',
+              }}
+            >
+              {isAdmin ? 'No tickets yet' : 'No tickets yet. Everything running smoothly!'}
             </p>
           </div>
         )}

@@ -62,9 +62,9 @@ export default function AnnouncementsPage() {
       style={{
         width: '34px',
         height: '34px',
-        borderRadius: '50%',
-        background: 'var(--accent-dim)',
-        border: '1px solid var(--accent-border)',
+        borderRadius: '8px',
+        background: 'var(--card)',
+        border: '1px solid var(--border)',
         color: 'var(--accent)',
         fontSize: '20px',
         display: 'flex',
@@ -93,7 +93,7 @@ export default function AnnouncementsPage() {
       <div className="flex flex-col gap-3 px-5 pt-5">
         {dataLoading ? (
           [1, 2].map((i) => (
-            <div key={i} style={{ height: '100px', background: 'var(--card)', borderRadius: '14px', opacity: 0.5 }} />
+            <div key={i} className="skeleton" style={{ height: '100px' }} />
           ))
         ) : announcements.length > 0 ? (
           announcements.map((ann) => (
@@ -101,8 +101,9 @@ export default function AnnouncementsPage() {
               key={ann.id}
               style={{
                 background: 'var(--card)',
-                border: ann.pinned ? '1px solid var(--accent-border)' : '1px solid var(--border)',
-                borderRadius: '14px',
+                border: '1px solid var(--border)',
+                borderLeft: `3px solid ${ann.pinned ? 'var(--yellow)' : 'var(--border-light)'}`,
+                borderRadius: '10px',
                 padding: '16px',
               }}
             >
@@ -110,24 +111,35 @@ export default function AnnouncementsPage() {
                 <div
                   style={{
                     fontSize: '10px',
-                    color: 'var(--accent)',
+                    fontFamily: 'var(--font-outfit)',
+                    color: 'var(--yellow)',
                     textTransform: 'uppercase',
                     letterSpacing: '0.6px',
                     fontWeight: 600,
                     marginBottom: '6px',
                   }}
                 >
-                  📌 Pinned
+                  Pinned
                 </div>
               )}
-              <div style={{ fontSize: '15px', fontWeight: 500, color: 'var(--text-1)', marginBottom: '4px' }}>
+              <div
+                style={{
+                  fontSize: '15px',
+                  fontWeight: 500,
+                  fontFamily: 'var(--font-outfit)',
+                  color: 'var(--text-1)',
+                  marginBottom: '4px',
+                }}
+              >
                 {ann.title}
               </div>
               <div
                 style={{
-                  fontSize: '12px',
-                  color: 'var(--text-3)',
-                  lineHeight: 1.5,
+                  fontSize: '13px',
+                  fontFamily: 'var(--font-outfit)',
+                  fontWeight: 300,
+                  color: 'var(--text-2)',
+                  lineHeight: 1.55,
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical' as const,
@@ -138,7 +150,15 @@ export default function AnnouncementsPage() {
                 {ann.content}
               </div>
               <div className="flex items-center justify-between">
-                <span style={{ fontSize: '11px', color: 'var(--text-3)' }}>{timeAgo(ann.created_at)}</span>
+                <span
+                  style={{
+                    fontSize: '11px',
+                    fontFamily: 'var(--font-outfit)',
+                    color: 'var(--text-3)',
+                  }}
+                >
+                  {timeAgo(ann.created_at)}
+                </span>
                 <div className="flex gap-2">
                   <button
                     onClick={() => togglePin(ann)}
@@ -148,9 +168,9 @@ export default function AnnouncementsPage() {
                       background: 'var(--surface)',
                       border: '1px solid var(--border)',
                       fontSize: '12px',
+                      fontFamily: 'var(--font-outfit)',
                       color: ann.pinned ? 'var(--accent)' : 'var(--text-2)',
                       cursor: 'pointer',
-                      fontFamily: 'var(--font-inter)',
                     }}
                   >
                     {ann.pinned ? 'Unpin' : 'Pin'}
@@ -160,12 +180,12 @@ export default function AnnouncementsPage() {
                     style={{
                       padding: '6px 12px',
                       borderRadius: '8px',
-                      background: 'var(--rose-dim)',
-                      border: '1px solid rgba(196,122,106,0.25)',
+                      background: 'var(--red-dim)',
+                      border: '1px solid rgba(243,139,168,0.25)',
                       fontSize: '12px',
-                      color: 'var(--rose)',
+                      fontFamily: 'var(--font-outfit)',
+                      color: 'var(--red)',
                       cursor: 'pointer',
-                      fontFamily: 'var(--font-inter)',
                     }}
                   >
                     Delete
@@ -176,8 +196,15 @@ export default function AnnouncementsPage() {
           ))
         ) : (
           <div className="text-center py-20">
-            <div style={{ fontSize: '40px', opacity: 0.3, marginBottom: '12px' }}>📢</div>
-            <p style={{ fontSize: '14px', color: 'var(--text-3)' }}>
+            <p
+              style={{
+                fontSize: '13px',
+                fontFamily: 'var(--font-outfit)',
+                fontWeight: 300,
+                color: 'var(--text-3)',
+                lineHeight: 1.6,
+              }}
+            >
               No announcements yet.
               <br />
               Tap + to create one.

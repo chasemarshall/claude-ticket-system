@@ -7,6 +7,19 @@ import { useToast } from '@/contexts/ToastContext'
 import { supabase } from '@/lib/supabase'
 import Header from '@/components/Header'
 
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  background: 'var(--card)',
+  border: '1px solid var(--border)',
+  borderRadius: '8px',
+  padding: '13px 16px',
+  fontSize: '15px',
+  fontFamily: 'var(--font-outfit)',
+  fontWeight: 300,
+  color: 'var(--text-1)',
+  outline: 'none',
+}
+
 export default function NewAnnouncementPage() {
   const { user, isAdmin, loading } = useSession()
   const router = useRouter()
@@ -60,11 +73,13 @@ export default function NewAnnouncementPage() {
         <div>
           <label
             style={{
+              display: 'block',
               fontSize: '11px',
+              fontFamily: 'var(--font-outfit)',
+              fontWeight: 500,
               color: 'var(--text-3)',
               textTransform: 'uppercase',
-              letterSpacing: '0.7px',
-              display: 'block',
+              letterSpacing: '2px',
               marginBottom: '10px',
             }}
           >
@@ -75,18 +90,8 @@ export default function NewAnnouncementPage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="What's the announcement?"
-            style={{
-              width: '100%',
-              background: 'var(--card)',
-              border: '1.5px solid var(--border)',
-              borderRadius: '10px',
-              padding: '14px 16px',
-              fontSize: '15px',
-              color: 'var(--text-1)',
-              outline: 'none',
-              fontFamily: 'var(--font-inter)',
-            }}
-            onFocus={(e) => (e.target.style.borderColor = 'var(--accent-border)')}
+            style={inputStyle}
+            onFocus={(e) => (e.target.style.borderColor = 'var(--accent)')}
             onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
           />
         </div>
@@ -95,11 +100,13 @@ export default function NewAnnouncementPage() {
         <div>
           <label
             style={{
+              display: 'block',
               fontSize: '11px',
+              fontFamily: 'var(--font-outfit)',
+              fontWeight: 500,
               color: 'var(--text-3)',
               textTransform: 'uppercase',
-              letterSpacing: '0.7px',
-              display: 'block',
+              letterSpacing: '2px',
               marginBottom: '10px',
             }}
           >
@@ -110,19 +117,8 @@ export default function NewAnnouncementPage() {
             onChange={(e) => setContent(e.target.value)}
             placeholder="Details for the family..."
             rows={5}
-            style={{
-              width: '100%',
-              background: 'var(--card)',
-              border: '1.5px solid var(--border)',
-              borderRadius: '10px',
-              padding: '14px 16px',
-              fontSize: '15px',
-              color: 'var(--text-1)',
-              outline: 'none',
-              fontFamily: 'var(--font-inter)',
-              resize: 'none',
-            }}
-            onFocus={(e) => (e.target.style.borderColor = 'var(--accent-border)')}
+            style={{ ...inputStyle, resize: 'none' }}
+            onFocus={(e) => (e.target.style.borderColor = 'var(--accent)')}
             onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
           />
         </div>
@@ -131,11 +127,13 @@ export default function NewAnnouncementPage() {
         <div>
           <label
             style={{
+              display: 'block',
               fontSize: '11px',
+              fontFamily: 'var(--font-outfit)',
+              fontWeight: 500,
               color: 'var(--text-3)',
               textTransform: 'uppercase',
-              letterSpacing: '0.7px',
-              display: 'block',
+              letterSpacing: '2px',
               marginBottom: '10px',
             }}
           >
@@ -149,8 +147,8 @@ export default function NewAnnouncementPage() {
               alignItems: 'center',
               justifyContent: 'space-between',
               background: 'var(--card)',
-              border: `1.5px solid ${pinned ? 'var(--accent-border)' : 'var(--border)'}`,
-              borderRadius: '10px',
+              border: `1px solid ${pinned ? 'var(--accent)' : 'var(--border)'}`,
+              borderRadius: '8px',
               padding: '14px 16px',
               transition: 'border-color 0.15s',
             }}
@@ -158,9 +156,26 @@ export default function NewAnnouncementPage() {
             <div className="flex items-center gap-3">
               <span style={{ fontSize: '18px' }}>📌</span>
               <div>
-                <div style={{ fontSize: '14px', color: 'var(--text-1)', fontWeight: 500 }}>Pin this announcement</div>
-                <div style={{ fontSize: '11px', color: 'var(--text-3)', marginTop: '2px' }}>
-                  Pinned posts appear first with a gold border
+                <div
+                  style={{
+                    fontSize: '14px',
+                    fontFamily: 'var(--font-outfit)',
+                    color: 'var(--text-1)',
+                    fontWeight: 500,
+                  }}
+                >
+                  Pin this announcement
+                </div>
+                <div
+                  style={{
+                    fontSize: '11px',
+                    fontFamily: 'var(--font-outfit)',
+                    fontWeight: 300,
+                    color: 'var(--text-3)',
+                    marginTop: '2px',
+                  }}
+                >
+                  Pinned posts appear first
                 </div>
               </div>
             </div>
@@ -184,9 +199,8 @@ export default function NewAnnouncementPage() {
                   width: '20px',
                   height: '20px',
                   borderRadius: '50%',
-                  background: 'white',
+                  background: 'var(--text-1)',
                   transition: 'left 0.2s',
-                  boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
                 }}
               />
             </div>
@@ -199,16 +213,16 @@ export default function NewAnnouncementPage() {
           disabled={submitting}
           style={{
             width: '100%',
-            background: submitting ? 'var(--border)' : 'var(--accent)',
-            color: '#0f0e1a',
+            background: submitting ? 'var(--card)' : 'var(--accent)',
+            color: submitting ? 'var(--text-3)' : 'var(--bg)',
             border: 'none',
-            borderRadius: '14px',
-            padding: '16px',
-            fontSize: '16px',
+            borderRadius: '10px',
+            padding: '15px',
+            fontSize: '15px',
             fontWeight: 600,
+            fontFamily: 'var(--font-outfit)',
             cursor: submitting ? 'not-allowed' : 'pointer',
-            fontFamily: 'var(--font-inter)',
-            transition: 'all 0.2s',
+            transition: 'all 0.15s',
           }}
         >
           {submitting ? 'Posting...' : 'Post Announcement'}

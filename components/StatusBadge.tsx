@@ -1,53 +1,30 @@
 import { TicketStatus } from '@/lib/types'
 
-const STATUS_CONFIG: Record<TicketStatus, { label: string; color: string; bg: string; border: string }> = {
-  open: {
-    label: 'Open',
-    color: '#4ade80',
-    bg: 'rgba(74,222,128,0.1)',
-    border: 'rgba(74,222,128,0.22)',
-  },
-  'in-progress': {
-    label: 'In Progress',
-    color: '#60a5fa',
-    bg: 'rgba(96,165,250,0.1)',
-    border: 'rgba(96,165,250,0.22)',
-  },
-  pending: {
-    label: 'Pending',
-    color: '#7b6fee',
-    bg: 'rgba(123,111,238,0.1)',
-    border: 'rgba(123,111,238,0.22)',
-  },
-  closed: {
-    label: 'Closed',
-    color: '#54504a',
-    bg: 'rgba(84,80,74,0.15)',
-    border: 'rgba(84,80,74,0.22)',
-  },
-}
-
 interface StatusBadgeProps {
   status: TicketStatus
 }
 
+const STATUS_CONFIG: Record<TicketStatus, { label: string; color: string; bg: string }> = {
+  open:        { label: 'Open',        color: 'var(--green)',  bg: 'var(--green-dim)'  },
+  'in-progress': { label: 'In Progress', color: 'var(--blue)',   bg: 'var(--blue-dim)'   },
+  pending:     { label: 'Pending',     color: 'var(--yellow)', bg: 'var(--yellow-dim)' },
+  closed:      { label: 'Closed',      color: 'var(--text-3)', bg: 'var(--surface)'    },
+}
+
 export default function StatusBadge({ status }: StatusBadgeProps) {
-  const config = STATUS_CONFIG[status]
+  const config = STATUS_CONFIG[status] ?? STATUS_CONFIG.open
 
   return (
     <span
       style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        padding: '3px 9px',
+        display: 'inline-block',
+        padding: '3px 8px',
         borderRadius: '999px',
-        fontSize: '10px',
-        fontWeight: 600,
-        textTransform: 'uppercase',
-        letterSpacing: '0.5px',
+        fontSize: '11px',
+        fontWeight: 500,
+        fontFamily: 'var(--font-outfit)',
         color: config.color,
         background: config.bg,
-        border: `1px solid ${config.border}`,
         whiteSpace: 'nowrap',
       }}
     >

@@ -12,16 +12,26 @@ import Header from '@/components/Header'
 import StatusBadge from '@/components/StatusBadge'
 
 const STATUSES: { value: TicketStatus; label: string }[] = [
-  { value: 'open', label: 'Open' },
+  { value: 'open',        label: 'Open'        },
   { value: 'in-progress', label: 'In Progress' },
-  { value: 'pending', label: 'Pending' },
-  { value: 'closed', label: 'Closed' },
+  { value: 'pending',     label: 'Pending'     },
+  { value: 'closed',      label: 'Closed'      },
 ]
 
 const PRIORITY_COLOR: Record<string, string> = {
-  high: 'var(--rose)',
-  medium: 'var(--accent)',
-  low: 'var(--sage)',
+  high:   'var(--red)',
+  medium: 'var(--peach)',
+  low:    'var(--green)',
+}
+
+const sectionLabel: React.CSSProperties = {
+  fontSize: '11px',
+  fontFamily: 'var(--font-outfit)',
+  fontWeight: 500,
+  color: 'var(--text-3)',
+  textTransform: 'uppercase',
+  letterSpacing: '2px',
+  marginBottom: '12px',
 }
 
 export default function TicketDetailPage() {
@@ -53,7 +63,6 @@ export default function TicketDetailPage() {
       .from('tickets')
       .update({ status, updated_at: new Date().toISOString() })
       .eq('id', ticket.id)
-
     if (!error) {
       setTicket({ ...ticket, status })
       showToast(`Status → ${status}`)
@@ -89,63 +98,66 @@ export default function TicketDetailPage() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '6px',
-            background: category.colorDim,
+            background: 'var(--surface)',
             border: '1px solid var(--border)',
-            borderRadius: '999px',
-            padding: '4px 12px',
+            borderRadius: '6px',
+            padding: '4px 10px',
             fontSize: '12px',
+            fontFamily: 'var(--font-outfit)',
             color: 'var(--text-2)',
-            marginBottom: '12px',
+            marginBottom: '14px',
           }}
         >
           {category.emoji} {category.name}
         </div>
 
         <h1
-          className="font-display"
-          style={{ fontSize: '30px', fontWeight: 400, color: 'var(--text-1)', lineHeight: 1.2, marginBottom: '16px' }}
+          style={{
+            fontFamily: 'var(--font-syne)',
+            fontSize: '28px',
+            fontWeight: 700,
+            color: 'var(--text-1)',
+            lineHeight: 1.2,
+            marginBottom: '16px',
+          }}
         >
           {ticket.title}
         </h1>
 
-        {/* Meta */}
+        {/* Meta row */}
         <div className="flex flex-wrap gap-2 items-center">
           <StatusBadge status={ticket.status} />
+          {[
+            `By ${ticket.author}`,
+            formatDate(ticket.created_at),
+          ].map((label) => (
+            <span
+              key={label}
+              style={{
+                background: 'var(--surface)',
+                border: '1px solid var(--border)',
+                borderRadius: '6px',
+                padding: '3px 10px',
+                fontSize: '11px',
+                fontFamily: 'var(--font-outfit)',
+                color: 'var(--text-2)',
+              }}
+            >
+              {label}
+            </span>
+          ))}
           <span
             style={{
-              background: 'var(--card)',
+              background: 'var(--surface)',
               border: '1px solid var(--border)',
-              borderRadius: '999px',
+              borderRadius: '6px',
               padding: '3px 10px',
               fontSize: '11px',
-              color: 'var(--text-2)',
-            }}
-          >
-            By {ticket.author}
-          </span>
-          <span
-            style={{
-              background: 'var(--card)',
-              border: '1px solid var(--border)',
-              borderRadius: '999px',
-              padding: '3px 10px',
-              fontSize: '11px',
-              color: 'var(--text-2)',
-            }}
-          >
-            {formatDate(ticket.created_at)}
-          </span>
-          <span
-            style={{
-              background: 'var(--card)',
-              border: '1px solid var(--border)',
-              borderRadius: '999px',
-              padding: '3px 10px',
-              fontSize: '11px',
+              fontFamily: 'var(--font-outfit)',
               color: PRIORITY_COLOR[ticket.priority],
             }}
           >
-            ⚡ {ticket.priority}
+            {ticket.priority} priority
           </span>
         </div>
       </div>
@@ -153,18 +165,18 @@ export default function TicketDetailPage() {
       {/* Description */}
       {ticket.description && (
         <div className="px-5 py-5" style={{ borderBottom: '1px solid var(--border)' }}>
-          <h4
+          <p style={sectionLabel}>Description</p>
+          <p
             style={{
-              fontSize: '11px',
-              color: 'var(--text-3)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.7px',
-              marginBottom: '10px',
+              fontSize: '15px',
+              fontFamily: 'var(--font-outfit)',
+              fontWeight: 300,
+              color: 'var(--text-2)',
+              lineHeight: 1.65,
             }}
           >
-            Description
-          </h4>
-          <p style={{ fontSize: '15px', color: 'var(--text-2)', lineHeight: 1.65 }}>{ticket.description}</p>
+            {ticket.description}
+          </p>
         </div>
       )}
 
@@ -172,47 +184,32 @@ export default function TicketDetailPage() {
       {isAdmin && (
         <>
           <div className="px-5 py-5" style={{ borderBottom: '1px solid var(--border)' }}>
-            <h4
-              style={{
-                fontSize: '11px',
-                color: 'var(--text-3)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.7px',
-                marginBottom: '12px',
-              }}
-            >
-              Update Status
-            </h4>
+            <p style={sectionLabel}>Update Status</p>
             <div className="grid grid-cols-2 gap-2">
-              {STATUSES.map((s) => (
-                <button
-                  key={s.value}
-                  onClick={() => updateStatus(s.value)}
-                  disabled={updating || ticket.status === s.value}
-                  style={{
-                    padding: '11px',
-                    borderRadius: '10px',
-                    fontSize: '13px',
-                    fontWeight: 500,
-                    cursor: ticket.status === s.value ? 'default' : 'pointer',
-                    fontFamily: 'var(--font-inter)',
-                    transition: 'all 0.15s',
-                    ...(ticket.status === s.value
-                      ? {
-                          background: 'var(--accent-dim)',
-                          border: '1.5px solid var(--accent)',
-                          color: 'var(--accent)',
-                        }
-                      : {
-                          background: 'var(--card)',
-                          border: '1.5px solid var(--border)',
-                          color: 'var(--text-2)',
-                        }),
-                  }}
-                >
-                  {s.label}
-                </button>
-              ))}
+              {STATUSES.map((s) => {
+                const isCurrentStatus = ticket.status === s.value
+                return (
+                  <button
+                    key={s.value}
+                    onClick={() => updateStatus(s.value)}
+                    disabled={updating || isCurrentStatus}
+                    style={{
+                      padding: '11px',
+                      borderRadius: '8px',
+                      fontSize: '13px',
+                      fontWeight: 500,
+                      fontFamily: 'var(--font-outfit)',
+                      cursor: isCurrentStatus ? 'default' : 'pointer',
+                      transition: 'all 0.15s',
+                      ...(isCurrentStatus
+                        ? { background: 'var(--accent-dim)', border: '1px solid var(--accent)', color: 'var(--accent)' }
+                        : { background: 'var(--card)', border: '1px solid var(--border)', color: 'var(--text-2)' }),
+                    }}
+                  >
+                    {s.label}
+                  </button>
+                )
+              })}
             </div>
           </div>
 
@@ -221,15 +218,15 @@ export default function TicketDetailPage() {
               onClick={deleteTicket}
               style={{
                 width: '100%',
-                background: 'var(--rose-dim)',
-                border: '1.5px solid rgba(196,122,106,0.3)',
-                borderRadius: '14px',
-                padding: '14px',
-                fontSize: '15px',
+                background: 'var(--red-dim)',
+                border: '1px solid rgba(243,139,168,0.3)',
+                borderRadius: '10px',
+                padding: '13px',
+                fontSize: '14px',
                 fontWeight: 500,
-                color: 'var(--rose)',
+                fontFamily: 'var(--font-outfit)',
+                color: 'var(--red)',
                 cursor: 'pointer',
-                fontFamily: 'var(--font-inter)',
               }}
             >
               Delete Ticket

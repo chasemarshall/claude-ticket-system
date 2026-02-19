@@ -28,14 +28,11 @@ export default function MyTicketsPage() {
   useEffect(() => {
     if (loading) return
     if (!user) { router.push('/'); return }
-
     fetchTickets()
-
     const channel = supabase
       .channel('my-tickets-realtime')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'tickets' }, fetchTickets)
       .subscribe()
-
     return () => { supabase.removeChannel(channel) }
   }, [user, loading, router, fetchTickets])
 
@@ -52,19 +49,10 @@ export default function MyTicketsPage() {
       }}
     >
       <Header title="My Tickets" showAvatar />
-
       <div className="flex flex-col gap-2 px-5 pt-5">
         {dataLoading ? (
           [1, 2, 3].map((i) => (
-            <div
-              key={i}
-              style={{
-                height: '72px',
-                background: 'var(--card)',
-                borderRadius: '14px',
-                opacity: 0.5,
-              }}
-            />
+            <div key={i} className="skeleton" style={{ height: '64px' }} />
           ))
         ) : tickets.length > 0 ? (
           tickets.map((ticket) => (
@@ -76,11 +64,8 @@ export default function MyTicketsPage() {
           ))
         ) : (
           <div className="text-center py-20">
-            <div style={{ fontSize: '40px', opacity: 0.3, marginBottom: '12px' }}>✅</div>
-            <p style={{ fontSize: '14px', color: 'var(--text-3)', lineHeight: 1.6 }}>
-              No tickets from you yet.
-              <br />
-              Everything running smoothly!
+            <p style={{ fontSize: '13px', fontFamily: 'var(--font-outfit)', fontWeight: 300, color: 'var(--text-3)', lineHeight: 1.6 }}>
+              No tickets yet.<br />Everything running smoothly!
             </p>
           </div>
         )}

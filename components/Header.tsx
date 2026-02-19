@@ -20,9 +20,7 @@ export default function Header({ title, showBack, showAvatar, action }: HeaderPr
     <header
       className="flex items-center justify-between px-5 sticky top-0 z-10"
       style={{
-        background: 'rgba(10,9,7,0.96)',
-        backdropFilter: 'blur(8px)',
-        WebkitBackdropFilter: 'blur(8px)',
+        background: 'var(--bg)',
         borderBottom: '1px solid var(--border)',
         paddingTop: 'calc(14px + env(safe-area-inset-top, 0px))',
         paddingBottom: '14px',
@@ -36,7 +34,7 @@ export default function Header({ title, showBack, showAvatar, action }: HeaderPr
             style={{
               width: '34px',
               height: '34px',
-              borderRadius: '50%',
+              borderRadius: '8px',
               background: 'var(--card)',
               border: '1px solid var(--border)',
               color: 'var(--text-2)',
@@ -52,8 +50,13 @@ export default function Header({ title, showBack, showAvatar, action }: HeaderPr
           </button>
         )}
         <h2
-          className="font-display"
-          style={{ fontSize: '26px', fontWeight: 400, color: 'var(--text-1)', lineHeight: 1 }}
+          style={{
+            fontFamily: 'var(--font-syne)',
+            fontSize: '22px',
+            fontWeight: 400,
+            color: 'var(--text-1)',
+            lineHeight: 1,
+          }}
         >
           {title}
         </h2>
@@ -70,7 +73,7 @@ export default function Header({ title, showBack, showAvatar, action }: HeaderPr
               height: '36px',
               borderRadius: '50%',
               background: member.colorDim,
-              border: `1.5px solid ${member.colorBorder}`,
+              border: `1px solid ${member.colorBorder}`,
               fontSize: '18px',
               display: 'flex',
               alignItems: 'center',

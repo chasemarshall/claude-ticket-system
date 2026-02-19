@@ -3,25 +3,23 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from '@/contexts/SessionContext'
-import { useToast } from '@/contexts/ToastContext'
 import { supabase } from '@/lib/supabase'
-import { Ticket, TicketStatus } from '@/lib/types'
+import { Ticket } from '@/lib/types'
 import Header from '@/components/Header'
 import TicketCard from '@/components/TicketCard'
 import StatCard from '@/components/StatCard'
 
-const FILTERS: { value: string; label: string }[] = [
-  { value: 'all', label: 'All' },
-  { value: 'open', label: 'Open' },
+const FILTERS = [
+  { value: 'all',         label: 'All'         },
+  { value: 'open',        label: 'Open'        },
   { value: 'in-progress', label: 'In Progress' },
-  { value: 'pending', label: 'Pending' },
-  { value: 'closed', label: 'Closed' },
+  { value: 'pending',     label: 'Pending'     },
+  { value: 'closed',      label: 'Closed'      },
 ]
 
 export default function AdminPage() {
   const { user, isAdmin, loading } = useSession()
   const router = useRouter()
-  const { showToast } = useToast()
   const [tickets, setTickets] = useState<Ticket[]>([])
   const [filter, setFilter] = useState('all')
   const [dataLoading, setDataLoading] = useState(true)
@@ -40,24 +38,21 @@ export default function AdminPage() {
     if (!user) { router.push('/'); return }
     if (!isAdmin) { router.push('/home'); return }
     fetchTickets()
-
     const channel = supabase
       .channel('admin-tickets')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'tickets' }, fetchTickets)
       .subscribe()
-
     return () => { supabase.removeChannel(channel) }
   }, [user, isAdmin, loading, router, fetchTickets])
 
   if (loading || !user || !isAdmin) return null
 
   const filtered = filter === 'all' ? tickets : tickets.filter((t) => t.status === filter)
-
   const stats = {
-    open: tickets.filter((t) => t.status === 'open').length,
+    open:       tickets.filter((t) => t.status === 'open').length,
     inProgress: tickets.filter((t) => t.status === 'in-progress').length,
-    pending: tickets.filter((t) => t.status === 'pending').length,
-    closed: tickets.filter((t) => t.status === 'closed').length,
+    pending:    tickets.filter((t) => t.status === 'pending').length,
+    closed:     tickets.filter((t) => t.status === 'closed').length,
   }
 
   return (
@@ -72,21 +67,20 @@ export default function AdminPage() {
     >
       <Header title="All Tickets" showAvatar />
 
-      {/* Stats */}
-      <div className="grid grid-cols-4 gap-2 px-5 pt-5">
-        {[
-          { value: stats.open, label: 'Open', color: 'var(--sage)' },
-          { value: stats.inProgress, label: 'In Prog', color: 'var(--sky)' },
-          { value: stats.pending, label: 'Pending', color: 'var(--accent)' },
-          { value: stats.closed, label: 'Closed', color: 'var(--text-3)' },
-        ].map((s) => (
-          <StatCard key={s.label} value={s.value} label={s.label} color={s.color} />
-        ))}
+      {/* Stat chips */}
+      <div
+        className="flex gap-2 px-5 pt-4"
+        style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', flexShrink: 0 }}
+      >
+        <StatCard value={stats.open}       label="Open"        color="var(--green)"  />
+        <StatCard value={stats.inProgress} label="In Progress" color="var(--blue)"   />
+        <StatCard value={stats.pending}    label="Pending"     color="var(--yellow)" />
+        <StatCard value={stats.closed}     label="Closed"      color="var(--text-3)" />
       </div>
 
       {/* Filter tabs */}
       <div
-        className="flex gap-2 px-5 pt-5"
+        className="flex gap-2 px-5 pt-4"
         style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', flexShrink: 0 }}
       >
         {FILTERS.map((f) => (
@@ -97,14 +91,14 @@ export default function AdminPage() {
               flexShrink: 0,
               padding: '6px 14px',
               borderRadius: '999px',
-              fontSize: '13px',
-              cursor: 'pointer',
-              fontFamily: 'var(--font-inter)',
+              fontSize: '12px',
+              fontFamily: 'var(--font-outfit)',
               fontWeight: 500,
-              transition: 'all 0.15s',
+              cursor: 'pointer',
               whiteSpace: 'nowrap',
+              transition: 'all 0.15s',
               ...(filter === f.value
-                ? { background: 'var(--accent)', border: '1px solid var(--accent)', color: '#0f0e1a' }
+                ? { background: 'var(--accent)', border: '1px solid var(--accent)', color: 'var(--bg)' }
                 : { background: 'var(--card)', border: '1px solid var(--border)', color: 'var(--text-2)' }),
             }}
           >
@@ -113,11 +107,11 @@ export default function AdminPage() {
         ))}
       </div>
 
-      {/* Tickets list */}
+      {/* Ticket list */}
       <div className="flex flex-col gap-2 px-5 pt-4">
         {dataLoading ? (
           [1, 2, 3].map((i) => (
-            <div key={i} style={{ height: '72px', background: 'var(--card)', borderRadius: '14px', opacity: 0.5 }} />
+            <div key={i} className="skeleton" style={{ height: '64px' }} />
           ))
         ) : filtered.length > 0 ? (
           filtered.map((ticket) => (
@@ -130,8 +124,16 @@ export default function AdminPage() {
           ))
         ) : (
           <div className="text-center py-16">
-            <div style={{ fontSize: '36px', opacity: 0.3, marginBottom: '10px' }}>✅</div>
-            <p style={{ fontSize: '14px', color: 'var(--text-3)' }}>No {filter !== 'all' ? filter : ''} tickets</p>
+            <p
+              style={{
+                fontSize: '13px',
+                fontFamily: 'var(--font-outfit)',
+                fontWeight: 300,
+                color: 'var(--text-3)',
+              }}
+            >
+              No {filter !== 'all' ? filter : ''} tickets
+            </p>
           </div>
         )}
       </div>

@@ -1,14 +1,21 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Syne, Outfit } from 'next/font/google'
 import './globals.css'
 import { SessionProvider } from '@/contexts/SessionContext'
 import { ToastProvider } from '@/contexts/ToastContext'
 import BottomNav from '@/components/BottomNav'
 
-const inter = Inter({
+const syne = Syne({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-inter',
+  weight: ['400', '700'],
+  variable: '--font-syne',
+  display: 'swap',
+})
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-outfit',
   display: 'swap',
 })
 
@@ -28,7 +35,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable}`}>
+    <html lang="en" className={`${syne.variable} ${outfit.variable}`}>
       <body>
         <SessionProvider>
           <ToastProvider>

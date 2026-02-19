@@ -10,9 +10,9 @@ interface TicketCardProps {
 }
 
 const PRIORITY_COLOR: Record<string, string> = {
-  high: '#f87171',
-  medium: '#fb923c',
-  low: '#4ade80',
+  high:   'var(--red)',
+  medium: 'var(--peach)',
+  low:    'var(--green)',
 }
 
 export default function TicketCard({ ticket, onClick, showAuthor }: TicketCardProps) {
@@ -21,37 +21,57 @@ export default function TicketCard({ ticket, onClick, showAuthor }: TicketCardPr
   return (
     <div
       onClick={onClick}
-      className="flex items-start gap-3 cursor-pointer transition-all duration-200 active:opacity-80"
+      className="list-item animate-entry cursor-pointer transition-colors duration-150"
       style={{
         background: 'var(--card)',
         border: '1px solid var(--border)',
-        borderRadius: '14px',
-        padding: '14px',
+        borderRadius: '10px',
+        padding: '12px',
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '12px',
+      }}
+      onMouseDown={(e) => {
+        const el = e.currentTarget
+        el.style.borderColor = 'var(--accent)'
+      }}
+      onMouseUp={(e) => {
+        const el = e.currentTarget
+        el.style.borderColor = 'var(--border)'
+      }}
+      onTouchStart={(e) => {
+        const el = e.currentTarget
+        el.style.borderColor = 'var(--accent)'
+      }}
+      onTouchEnd={(e) => {
+        const el = e.currentTarget
+        el.style.borderColor = 'var(--border)'
       }}
     >
       {/* Category icon */}
       <div
         style={{
-          width: '42px',
-          height: '42px',
-          borderRadius: '12px',
-          background: category.colorDim,
+          width: '36px',
+          height: '36px',
+          flexShrink: 0,
+          background: 'var(--surface)',
+          borderRadius: '6px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '20px',
-          flexShrink: 0,
+          fontSize: '18px',
         }}
       >
         {category.emoji}
       </div>
 
       {/* Info */}
-      <div className="flex-1 min-w-0">
+      <div style={{ flex: 1, minWidth: 0 }}>
         <div
           style={{
             fontSize: '15px',
             fontWeight: 500,
+            fontFamily: 'var(--font-outfit)',
             color: 'var(--text-1)',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -60,14 +80,30 @@ export default function TicketCard({ ticket, onClick, showAuthor }: TicketCardPr
         >
           {ticket.title}
         </div>
-        <div style={{ fontSize: '12px', color: 'var(--text-3)', marginTop: '3px' }}>
+        <div
+          style={{
+            fontSize: '12px',
+            fontFamily: 'var(--font-outfit)',
+            fontWeight: 300,
+            color: 'var(--text-3)',
+            marginTop: '3px',
+          }}
+        >
           {showAuthor ? `${ticket.author} · ` : ''}
           {timeAgo(ticket.created_at)} · {category.name}
         </div>
       </div>
 
-      {/* Right side */}
-      <div className="flex flex-col items-end gap-2 flex-shrink-0">
+      {/* Right */}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-end',
+          gap: '6px',
+          flexShrink: 0,
+        }}
+      >
         <StatusBadge status={ticket.status} />
         <div
           style={{
@@ -75,7 +111,6 @@ export default function TicketCard({ ticket, onClick, showAuthor }: TicketCardPr
             height: '6px',
             borderRadius: '50%',
             background: PRIORITY_COLOR[ticket.priority],
-            opacity: 0.8,
           }}
           title={`${ticket.priority} priority`}
         />
